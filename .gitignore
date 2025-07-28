@@ -39,3 +39,12 @@
 
 # debug information files
 *.dwo
+
+# External libraries
+import/vulkan-headers/
+import/volk/
+import/vma/
+import/glfw/
+import/pybind/
+import/spdlog/
+import/shaderc/
