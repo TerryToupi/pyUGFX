@@ -48,3 +48,9 @@ import/glfw/
 import/pybind/
 import/spdlog/
 import/shaderc/
+
+# Executables/IDE folder
+out/
+
+# macos .DS_Store
+.DS_Store
