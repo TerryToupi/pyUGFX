@@ -1,8 +1,7 @@
-#include <shaderc/shaderc.hpp>
+#include <iostream> 
 
 int main()
-{   
-    shaderc::Compiler compiler;
-    shaderc::CompileOptions options;
+{
+    std::cout << "Hello World!";
     return 0;
 }
