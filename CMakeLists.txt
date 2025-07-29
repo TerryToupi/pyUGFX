@@ -13,3 +13,4 @@ endif(MSVC)
 
 add_subdirectory(import)
 add_subdirectory(source)
+add_subdirectory(tests)
