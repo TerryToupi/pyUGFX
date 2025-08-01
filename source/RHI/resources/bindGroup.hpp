@@ -22,8 +22,6 @@ namespace gfx
         {
             uint32_t slot = 0;
             utils::Handle<Buffer> buffer;
-            uint32_t byteOffset = 0;
-            uint32_t range = 0;
         };
         utils::Span<BufferEntry> buffers;
         

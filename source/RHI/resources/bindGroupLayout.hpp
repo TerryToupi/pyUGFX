@@ -4,7 +4,6 @@
 #include <span.hpp>
 #include <handle.hpp>
 #include <enums.hpp>
-#include <resources/bindGroupLayout.hpp>
 
 namespace gfx
 {

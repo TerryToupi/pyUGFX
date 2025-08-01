@@ -6,7 +6,7 @@
 #include <resources/shader.hpp>
 #include <resources/bindGroup.hpp>
 #include <resources/buffer.hpp>
-#include <resources/dynamicBuffer.hpp>
+#include <resources/dynamicBuffers.hpp>
 #include <vector>
 
 using namespace utils;
@@ -44,7 +44,7 @@ namespace gfx
 	{
 		Handle<Shader> shader;
 		Handle<BindGroup> bindGroups[3];
-		Handle<DynamicBuffer> dynamicBuffer;
+		Handle<DynamicBuffers> dynamicBuffer;
 		Handle<Buffer> indexBuffer;
 		Handle<Buffer> vertexBuffers[3];
 		uint32_t indexOffset = 0;
@@ -59,7 +59,7 @@ namespace gfx
 	{
 		Handle<Shader> shader;
 		Handle<BindGroup> bindGroups[3];
-		Handle<DynamicBuffer> dynamicBuffer;
+		Handle<DynamicBuffers> dynamicBuffer;
 		uint32_t dynamicBufferOffset[2];
 		Vector3I threadGroupCount;
 	};
