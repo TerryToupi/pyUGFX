@@ -15,7 +15,6 @@ namespace gfx
         struct BufferBinding
         {
             uint32_t slot = 0;
-            bool hasDynamicOffset = false;
             BufferBindingType type = BufferBindingType::UNIFORM;
             ShaderStage visibility = ShaderStage::VERTEX | ShaderStage::FRAGMENT;
         };
@@ -24,7 +23,7 @@ namespace gfx
         struct TextureBinding
         {
             uint32_t slot = 0;
-            TextureSampleType type = TextureSampleType::FLOAT;
+            TextureSampleType sampleType = TextureSampleType::FLOAT;
             TextureDimention viewDimention = TextureDimention::D2;
             ShaderStage visibility = ShaderStage::VERTEX | ShaderStage::FRAGMENT;
         };
