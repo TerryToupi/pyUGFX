@@ -17,7 +17,7 @@ namespace gfx
 	{
 		struct ShaderStage 
 		{
-			bool enabled = true;
+			bool enabled = false;
 			utils::Span<uint8_t> sourceCode;
 			std::string entryFunc;         // Entry function name
 		};
@@ -34,10 +34,21 @@ namespace gfx
 			utils::Span<VertexAttribute> attributes;
 		};
 
+        struct BlendDescriptor
+        {
+            BlendOperation colorOp = BlendOperation::ADD;
+            BlendFactor srcColorFactor = BlendFactor::SRC_ALPHA;
+            BlendFactor dstColorFactor = BlendFactor::ONE_MINUS_SRC_ALPHA;
+            BlendOperation alphaOp = BlendOperation::ADD;
+            BlendFactor srcAlphaFactor = BlendFactor::ONE;
+            BlendFactor dstAlphaFactor = BlendFactor::ZERO;
+        };
+
 		struct GraphicsState 
 		{
             gfx::Compare depthTest = gfx::Compare::UNDEFINED;
 			utils::Span<VertexBufferBinding> vertexBufferBindings;
+			BlendDescriptor blend = {};
 			utils::Handle<RenderPassLayout> renderPassLayout;
 		};
 

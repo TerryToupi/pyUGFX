@@ -3,6 +3,7 @@ include(FetchContent)
 
 # just so we can use fetchcontent declare and populate together
 cmake_policy(SET CMP0169 OLD)
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 project(ImportLibraries)
 
@@ -22,6 +23,7 @@ FetchContent_Declare(
     GIT_TAG vulkan-sdk-1.4.321.0 
 )
 FetchContent_MakeAvailable(Vulkan-Headers)
+mark_target_import(Vulkan-Headers)
 
 # volk
 set(FETCHCONTENT_BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/volk")
@@ -31,6 +33,7 @@ FetchContent_Declare(
     GIT_TAG vulkan-sdk-1.4.321.0 
 )
 FetchContent_MakeAvailable(volk)
+mark_targets_import(volk)
 
 # VulkanMemoryAllocator
 set(FETCHCONTENT_BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/vma")
@@ -40,6 +43,7 @@ FetchContent_Declare(
     GIT_TAG v3.3.0 
 )
 FetchContent_MakeAvailable(VulkanMemoryAllocator)
+mark_targets_import(VulkanMemoryAllocator)
 
 # GLFW
 set(FETCHCONTENT_BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/glfw")
@@ -49,6 +53,7 @@ FetchContent_Declare(
     GIT_TAG 3.4
 )
 FetchContent_MakeAvailable(glfw)
+mark_targets_import(glfw)
 
 # pybind11
 set(FETCHCONTENT_BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/pybind")
@@ -58,6 +63,7 @@ FetchContent_Declare(
     GIT_TAG v3.0.0
 )
 FetchContent_MakeAvailable(pybind11)
+mark_targets_import(pybind11)
 
 # spdlog
 set(FETCHCONTENT_BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/spdlog")
@@ -67,6 +73,7 @@ FetchContent_Declare(
     GIT_TAG v1.15.3
 )
 FetchContent_MakeAvailable(spdlog)
+mark_targets_import(spdlog)
 
 # shaderc
 set(FETCHCONTENT_BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/shaderc")
@@ -86,7 +93,7 @@ if(NOT sync_result EQUAL 0)
     message(FATAL_ERROR "Failed to sync shaderc dependencies!")
 endif()
 #Trying to make available shaderc
-add_subdirectory(${shaderc_SOURCE_DIR} ${shaderc_BINARY_DIR})
+add_subdirectory_import(${shaderc_SOURCE_DIR} ${shaderc_BINARY_DIR})
 
 # Connecting dependencies
 target_link_libraries(${PROJECT_NAME}

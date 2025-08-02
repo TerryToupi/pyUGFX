@@ -15,26 +15,20 @@ namespace gfx
             bool depthTarget = false;
             TextureFormat depthTargetFormat = TextureFormat::D32_FLOAT;
         };
-
-        struct BlendDescriptor
-        {
-            BlendOperation colorOp = BlendOperation::ADD;
-            BlendFactor srcColorFactor = BlendFactor::SRC_ALPHA;
-            BlendFactor dstColorFactor = BlendFactor::ONE_MINUS_SRC_ALPHA;
-            BlendOperation alphaOp = BlendOperation::ADD;
-            BlendFactor srcAlphaFactor = BlendFactor::ONE;
-            BlendFactor dstAlphaFactor = BlendFactor::ZERO;
-        };
         
         struct ColorTargetDescriptor
         {
             bool enabled = true;
             TextureFormat format = TextureFormat::RGBA8_UNORM;
-            BlendDescriptor blend = {};
+        };
+
+        struct SubPass
+        {
+            DepthDescriptor depth;
+            utils::Span<ColorTargetDescriptor> colorTargets;
         };
         
-        DepthDescriptor depth;
-        utils::Span<ColorTargetDescriptor> colorTargets;
+        utils::Span<SubPass> subPasses;
     };
 }
 

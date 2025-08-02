@@ -5,6 +5,7 @@
 #include <handle.hpp>
 #include <enums.hpp>
 #include <resources/renderPassLayout.hpp>
+#include <resources/texture.hpp>
 
 namespace gfx
 {
@@ -22,6 +23,7 @@ namespace gfx
         
         struct ColorTarget
         {
+            utils::Handle<Texture> target;
             LoadOperation loadOp = LoadOperation::CLEAR;
             StoreOperation storeOp = StoreOperation::STORE;
             ClearColor clearColor = { 0.2, 0.2, 0.2, 1 };
@@ -29,6 +31,7 @@ namespace gfx
         
         struct DepthTarget
         {
+            utils::Handle<Texture> target;
             LoadOperation loadOp = LoadOperation::CLEAR;
             StoreOperation storeOp = StoreOperation::STORE;
             LoadOperation stencilLoadOp = LoadOperation::CLEAR;
