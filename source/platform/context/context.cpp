@@ -24,6 +24,8 @@ void setup::ContextShutDown()
 	gfx::Device::instance->ShutDown();
 
 	gfx::Device::instance.reset();
+
+	diag::Logger::ShutDown();
 }
 
 void setup::ContextInit(Platforms platform)
