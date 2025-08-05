@@ -1,6 +1,7 @@
 #ifndef __WINDOW_HPP__
 #define __WINDOW_HPP__
 
+#include <common.hpp>
 #include <string>
 #include <functional>
 #include <enums.hpp>
@@ -19,7 +20,7 @@ namespace gfx
     public: 
         using GameLoop = std::function<void()>;
 
-        static inline Window* instance = nullptr;
+        static inline sPtr<Window> instance = nullptr;
         
         virtual void Init(const WindowDescriptor& desc) = 0;
         virtual void ShutDown() = 0;

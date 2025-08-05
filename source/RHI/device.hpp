@@ -1,6 +1,7 @@
 #ifndef __DEVICE_HPP__
 #define __DEVICE_HPP__
 
+#include <common.hpp>
 #include <string>
 #include <cstdlib>
 #include <cstddef>
@@ -21,7 +22,7 @@ namespace gfx
     class Device
     {
     public:
-        static inline Device* instance = nullptr;
+        static inline sPtr<Device> instance = nullptr;
         
         virtual ~Device() = default;
         

@@ -7,14 +7,14 @@
 
 static void VulkanInit()
 {
-	gfx::Device::instance = new gfx::VulkanDevice();
+	gfx::Device::instance = gfx::CreateShared<gfx::VulkanDevice>();
 
 	gfx::Device::instance->Init();
 }
 
 static void MetalInit()
 {
-	gfx::Device::instance = new gfx::MetalDevice();
+	gfx::Device::instance = gfx::CreateShared<gfx::MetalDevice>();
 
 	gfx::Device::instance->Init();
 }
@@ -23,7 +23,7 @@ void setup::ContextShutDown()
 {
 	gfx::Device::instance->ShutDown();
 
-	delete gfx::Device::instance;
+	gfx::Device::instance.reset();
 }
 
 void setup::ContextInit(Platforms platform)

@@ -1,6 +1,8 @@
 #ifndef __RESOURCE_MANAGER_HPP__ 
 #define __RESOURCE_MANAGER_HPP__ 
 
+#include <common.hpp>
+
 #include <resources/bindGroup.hpp>
 #include <resources/bindGroupLayout.hpp>
 #include <resources/buffer.hpp>
@@ -19,7 +21,7 @@ namespace gfx
 	class ResourceManager
 	{
 	public: 
-		static inline ResourceManager* instance = nullptr;
+		static inline sPtr<ResourceManager> instance = nullptr;
 
 		virtual ~ResourceManager() = default;
 
