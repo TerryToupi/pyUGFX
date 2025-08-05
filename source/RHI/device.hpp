@@ -29,7 +29,7 @@ namespace gfx
         virtual void ShutDown() = 0;
 
     public:
-        DeviceDescriptor s_DeviceDesc;
+        DeviceDescriptor p_DeviceDesc;
     };
 }
 

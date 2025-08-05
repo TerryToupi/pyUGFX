@@ -2,7 +2,6 @@
 #define __SPAN_HPP__
 
 #include <initializer_list>
-#include <stdexcept>
 
 namespace utils
 {

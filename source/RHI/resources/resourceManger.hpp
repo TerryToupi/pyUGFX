@@ -10,7 +10,6 @@
 #include <resources/sampler.hpp>
 #include <resources/shader.hpp>
 #include <resources/texture.hpp>
-#include <resources/frameBuffer.hpp>
 #include <resources/renderPassLayout.hpp>
 
 #include <handle.hpp>
@@ -37,7 +36,6 @@ namespace gfx
 		virtual utils::Handle<DynamicBuffersLayout>	CreateDynamicBuffersLayout(const gfx::DynamicBuffersLayoutDescriptor&& desc) = 0;
 		virtual utils::Handle<RenderPass>			CreateRenderPass(const gfx::RenderPassDescriptor&& desc) = 0;
         virtual utils::Handle<RenderPassLayout> 	CreateRenderPassLayout(const gfx::RenderPassLayoutDescriptor&& desc) = 0;
-        virtual utils::Handle<FrameBuffer>      	CreateFrameBuffer(const gfx::FrameBufferDescriptor&& desc) = 0;
 
 		virtual void Remove(utils::Handle<Shader> handle) = 0;
 		virtual void Remove(utils::Handle<BindGroup> handle) = 0;
@@ -49,7 +47,6 @@ namespace gfx
 		virtual void Remove(utils::Handle<DynamicBuffersLayout> handle) = 0;
 		virtual void Remove(utils::Handle<RenderPass> handle) = 0;
         virtual void Remove(utils::Handle<RenderPassLayout> handle) = 0;
-        virtual void Remove(utils::Handle<FrameBuffer> handle) = 0;
 
 		virtual void SetBufferData(utils::Handle<Buffer> buffer, uint32_t offset, const void* data, uint32_t size) = 0;
 	};

@@ -11,14 +11,10 @@ namespace gfx
 	public:
 		static inline Renderer* instance = nullptr;
 
-		static void INIT();
-		static void SHUTDOWN();
-
-		virtual CommandBuffer* BeginCommandRecording(gfx::CommandBufferType type) = 0;
-
-	private:
 		virtual void Init() = 0;
 		virtual void ShutDown() = 0;
+
+		virtual CommandBuffer* BeginCommandRecording(gfx::CommandBufferType type) = 0;
 	};
 }
 

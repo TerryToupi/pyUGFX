@@ -16,7 +16,6 @@ namespace gfx
 	public:
 		virtual void BeginRenderPass(
 			utils::Handle<RenderPass> renderPass, 
-			utils::Handle<FrameBuffer> frameBuffer, 
 			utils::Span<uint32_t> drawCalls
 		) = 0;
 
@@ -30,8 +29,6 @@ namespace gfx
 			utils::Span<utils::Handle<Buffer>> bufferWrite,
 			utils::Span<Dispatch> dispatches
 		) = 0;
-
-		virtual void BeginImGuiPass() = 0;
 
 		virtual void Submit() = 0;
 	};

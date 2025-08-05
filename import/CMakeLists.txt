@@ -66,6 +66,9 @@ FetchContent_MakeAvailable(pybind11)
 mark_targets_import(pybind11)
 
 # spdlog
+set(SPDLOG_BUILD_TESTS OFF)
+set(SPDLOG_BUILD_SHARED OFF)
+
 set(FETCHCONTENT_BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/spdlog")
 FetchContent_Declare(
     spdlog
