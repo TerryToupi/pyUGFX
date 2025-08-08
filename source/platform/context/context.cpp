@@ -43,7 +43,7 @@ void setup::ContextInit(Platforms platform)
 	switch (platform)
 	{
 	case setup::UNDEFINED:
-        #if PYUGFX_ENABLE_VULKAN
+        #if PYUGFX_ENABLE_VULKAN && defined(_WIN64)
         {
             GFX_TRACE("Win32 platform detected, Initializing Vulkan API!");
             VulkanInit();
@@ -51,7 +51,7 @@ void setup::ContextInit(Platforms platform)
         }
         #endif
 
-        #if PYUGFX_ENABLE_METAL
+        #if PYUGFX_ENABLE_METAL && defined(__APPLE__)
         {
             GFX_TRACE("MacOS platform detected, Initializing Metal API!");
             MetalInit();

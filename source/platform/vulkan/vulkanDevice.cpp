@@ -1,6 +1,6 @@
 #include <vulkanDevice.hpp>
 #include <assert.hpp>
-#include <Volk/volk.h>
+#include <volk.h>
 
 void gfx::VulkanDevice::Init()
 {

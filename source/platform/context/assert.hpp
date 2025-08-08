@@ -2,7 +2,7 @@
 #define __ASSERT_HPP__
 
 #include <filesystem>
-#include <context/log.hpp>
+#include <log.hpp>
 
 #if defined(_MSC_VER)
 #define GFX_DEBUGBREAK() __debugbreak()
