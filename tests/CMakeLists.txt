@@ -5,5 +5,5 @@ add_executable(pyUGFX_test1
 )
 
 target_link_libraries(pyUGFX_test1
-    PRIVATE pyUGFX::lib
+    PRIVATE pyUGFX::library
 )

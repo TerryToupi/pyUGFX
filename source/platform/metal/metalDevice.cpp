@@ -1,4 +1,4 @@
-#include <metal/metalDevice.hpp>
+#include <metalDevice.hpp>
 
 void gfx::MetalDevice::Init()
 {

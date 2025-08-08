@@ -10,23 +10,10 @@ if (NOT Python3_FOUND)
     message(FATAL_ERROR "Python3 not found! Please install Python3.")
 endif()
 
-CPMAddPackage(
-    NAME Vulkan-Headers
-    GIT_REPOSITORY https://github.com/KhronosGroup/Vulkan-Headers.git
-    GIT_TAG vulkan-sdk-1.4.321.0
-)
 
-CPMAddPackage(
-    NAME volk
-    GIT_REPOSITORY https://github.com/zeux/volk.git
-    GIT_TAG vulkan-sdk-1.4.321.0 
-)
-
-CPMAddPackage(
-    NAME VulkanMemoryAllocator
-    GIT_REPOSITORY https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator.git
-    GIT_TAG v3.3.0 
-)
+#############################
+#   UNIVERSAL DEPENDECIES   #
+#############################
 
 CPMAddPackage(
     NAME glfw
@@ -76,11 +63,46 @@ CPMAddPackage(
 
 # Connecting dependencies
 target_link_libraries(${PROJECT_NAME}
-    INTERFACE Vulkan-Headers
-    INTERFACE volk
-    INTERFACE VulkanMemoryAllocator
     INTERFACE glfw
     INTERFACE pybind11::pybind11
     INTERFACE shaderc
     INTERFACE spdlog::spdlog
 )
+
+#####################################
+#   PLATFROM SPACIFIC DEPENDECIES   #
+#####################################
+
+####################
+# PLATFORM VULLKAN #
+####################
+
+if(PYUGFX_ENABLE_VULKAN)
+    CPMAddPackage(
+        NAME Vulkan-Headers
+        GIT_REPOSITORY https://github.com/KhronosGroup/Vulkan-Headers.git
+        GIT_TAG vulkan-sdk-1.4.321.0
+    )
+
+    CPMAddPackage(
+        NAME volk
+        GIT_REPOSITORY https://github.com/zeux/volk.git
+        GIT_TAG vulkan-sdk-1.4.321.0 
+    )
+
+    CPMAddPackage(
+        NAME VulkanMemoryAllocator
+        GIT_REPOSITORY https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator.git
+        GIT_TAG v3.3.0 
+    )
+
+    target_link_libraries(${PROJECT_NAME}
+        INTERFACE Vulkan-Headers 
+        INTERFACE volk 
+        INTERFACE VulkanMemoryAllocator 
+    )
+endif()
+
+##################
+# PLATFORM Metal #
+##################

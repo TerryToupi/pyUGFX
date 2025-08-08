@@ -1,5 +1,5 @@
-#include <vulkan/vulkanDevice.hpp>
-#include <context/assert.hpp>
+#include <vulkanDevice.hpp>
+#include <assert.hpp>
 #include <Volk/volk.h>
 
 void gfx::VulkanDevice::Init()
