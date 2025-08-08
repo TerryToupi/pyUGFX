@@ -106,3 +106,25 @@ endif()
 ##################
 # PLATFORM Metal #
 ##################
+
+if(PYUGFX_ENABLE_METAL)
+    message("Linking Metal headers and Metal frameworks")
+
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/metal-headers)
+
+    target_link_libraries(${PROJECT_NAME} 
+        INTERFACE Metal::Headers
+    )
+
+    find_library(METAL Metal) 
+    find_library(FOUNDATION Foundation)
+    find_library(QUARTZCORE QuartzCore)
+
+    target_link_libraries(${PROJECT_NAME}
+        INTERFACE stdc++
+        INTERFACE "-framework Metal"
+        INTERFACE "-framework Foundation"
+        INTERFACE "-framework QuartzCore"
+        INTERFACE objc
+    )
+endif()
