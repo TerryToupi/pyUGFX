@@ -43,11 +43,14 @@
 # External libraries
 import/vulkan-headers/
 import/volk/
-import/vma/
+import/vulkanmemoryallocator/
 import/glfw/
-import/pybind/
+import/pybind11/
 import/spdlog/
 import/shaderc/
+import/spirv-headers/
+import/spirv-tools/
+import/glslang/
 
 # Executables/IDE folder
 out/
