@@ -108,9 +108,11 @@ endif()
 ##################
 
 if(PYUGFX_ENABLE_METAL)
-    message("Linking Metal headers and Metal frameworks")
-
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/metal-headers)
+    CPMAddPackage(
+        Name Metal-Headers
+        GIT_REPOSITORY https://github.com/TerryToupi/Metal-Headers.git
+        GIT_TAG main
+    )
 
     target_link_libraries(${PROJECT_NAME} 
         INTERFACE Metal::Headers

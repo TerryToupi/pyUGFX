@@ -51,6 +51,7 @@ import/shaderc/
 import/spirv-headers/
 import/spirv-tools/
 import/glslang/
+import/metal-headers/
 
 # Executables/IDE folder
 out/
