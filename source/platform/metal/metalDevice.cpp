@@ -12,12 +12,12 @@ void gfx::MetalDevice::Init()
     MTL::Device* device = MTL::CreateSystemDefaultDevice();
     CA::MetalLayer* layer = CA::MetalLayer::layer()->retain();
     
+    layer->setDevice(device);
+    
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
     }
-    
-    layer->setDevice(device);
     
     layer->release();
 }
