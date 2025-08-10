@@ -4,13 +4,17 @@
 #include <resources/buffer.hpp>
 #include <context.hpp>
 
+void run()
+{
+    return;
+}
+
 int main()
 {
-    setup::ContextInit();
+    setup::ContextInit(setup::Platforms::VULKAN);
 
-    utils::Handle<gfx::Buffer> buffer;
-    std::cout << "Hello World!" << std::endl;
-
+    gfx::Window::instance->Run(run);
+    
     setup::ContextShutDown();
     return 0;
 }

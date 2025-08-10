@@ -31,6 +31,7 @@ group_sources_by_folder_from_list(CONTEXT_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}")
 group_sources_by_folder_from_list(RHI_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}")
 group_sources_by_folder_from_list(UTILS_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}")
 
+# including Context source files
 target_sources(pyUGFX_library
     PRIVATE ${CONTEXT_FILES}
 )
@@ -39,6 +40,7 @@ target_include_directories(pyUGFX_library
 )
 group_sources_by_folder_from_list(CONTEXT_FILES "${CMAKE_CURRENT_SOURCE_DIR}")
 
+# vulkan specific platform files
 if(PYUGFX_ENABLE_VULKAN)
     target_sources(pyUGFX_library
         PRIVATE ${VULKAN_FILES}
@@ -49,6 +51,7 @@ if(PYUGFX_ENABLE_VULKAN)
     group_sources_by_folder_from_list(VULKAN_FILES "${CMAKE_CURRENT_SOURCE_DIR}")
 endif()
 
+# metal specific platform files
 if(PYUGFX_ENABLE_METAL)
     target_sources(pyUGFX_library
         PRIVATE ${METAL_FILES}
@@ -59,6 +62,7 @@ if(PYUGFX_ENABLE_METAL)
     group_sources_by_folder_from_list(METAL_FILES "${CMAKE_CURRENT_SOURCE_DIR}")
 endif()
 
+# platform definitions
 target_compile_definitions(pyUGFX_library
     PUBLIC PYUGFX_ENABLE_VULKAN=$<BOOL:${PYUGFX_ENABLE_VULKAN}>
     PUBLIC PYUGFX_ENABLE_METAL=$<BOOL:${PYUGFX_ENABLE_METAL}>

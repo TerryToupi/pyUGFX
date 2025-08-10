@@ -22,7 +22,7 @@ namespace gfx
 
         static inline sPtr<Window> instance = nullptr;
         
-        virtual void Init(const WindowDescriptor& desc) = 0;
+        virtual void Init(const WindowDescriptor&& desc) = 0;
         virtual void ShutDown() = 0;
         virtual void Run(const GameLoop& func) = 0; 
 

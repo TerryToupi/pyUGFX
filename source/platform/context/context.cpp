@@ -2,14 +2,22 @@
 #include <log.hpp>
 
 #include <device.hpp>
+#include <window.hpp>
 
 #if PYUGFX_ENABLE_VULKAN
 #include <vulkanDevice.hpp>
+#include <vulkanWindow.hpp>
 
 static void VulkanInit()
 {
+    gfx::Window::instance = gfx::CreateShared<gfx::VulkanWindow>();
     gfx::Device::instance = gfx::CreateShared<gfx::VulkanDevice>();
 
+    gfx::Window::instance->Init({
+        .width = 800,
+        .height = 600,
+        .name = "Heavy"
+    });
     gfx::Device::instance->Init();
 }
 #endif
@@ -27,8 +35,10 @@ static void MetalInit()
 
 void setup::ContextShutDown()
 {
+    gfx::Window::instance->ShutDown();
 	gfx::Device::instance->ShutDown();
 
+    gfx::Window::instance.reset();
 	gfx::Device::instance.reset();
 
 	diag::Logger::ShutDown();
