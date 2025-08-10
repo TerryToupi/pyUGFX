@@ -29,7 +29,7 @@ void gfx::VulkanWindow::Run(const GameLoop& func)
 
 gfx::TextureFormat gfx::VulkanWindow::GetSurfaceFormat()
 {
-    
+    return gfx::TextureFormat::UNDEFINED;
 }
 
 void gfx::VulkanWindow::GetWindowSize(int* width, int* heigh)
@@ -39,12 +39,12 @@ void gfx::VulkanWindow::GetWindowSize(int* width, int* heigh)
 
 bool gfx::VulkanWindow::GetKey(input::Key key)
 {
-    
+    return false;
 }
 
 bool gfx::VulkanWindow::GetMouseButton(input::Button button)
 {
-    
+    return false;
 }
 
 void gfx::VulkanWindow::GetMousePos(double* x, double* y)

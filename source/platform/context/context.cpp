@@ -14,9 +14,9 @@ static void VulkanInit()
     gfx::Device::instance = gfx::CreateShared<gfx::VulkanDevice>();
 
     gfx::Window::instance->Init({
+        .name = "Heavy",
         .width = 800,
         .height = 600,
-        .name = "Heavy"
     });
     gfx::Device::instance->Init();
 }
