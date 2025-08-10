@@ -15,6 +15,10 @@ namespace gfx
         virtual void ShutDown() override;
         virtual void Run(const GameLoop& func) override;
         
+        virtual void CreateSwapChain() override;
+        virtual void CleanUpSwapChain() override;
+        virtual void ReCreateSwapChain() override;
+        
         virtual gfx::TextureFormat GetSurfaceFormat() override;
         
         virtual void GetWindowSize(int* width, int* heigh) override;
@@ -24,13 +28,16 @@ namespace gfx
         virtual void GetMousePos(double* x, double* y) override;
         
         void CreateSurface(VkInstance instance);
-        void CleanupSwapchain();
-        void CreateSwapchain();
-        void ReCreateSwapChain();
         
         GLFWwindow* GetWindow();
         VkSurfaceKHR GetSurface();
-        
+   
+    private:
+        VkSurfaceFormatKHR ChooseSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& formats);
+        VkPresentModeKHR ChoosePresentMode(const std::vector<VkPresentModeKHR>& modes);
+        VkExtent2D ChooseExtent(const VkSurfaceCapabilitiesKHR& capabilities);
+        VkImageView CreateImageView(VkImage image, VkFormat format);
+    
     private:
         GLFWwindow* m_Window = nullptr;
         VkSurfaceKHR m_Surface = VK_NULL_HANDLE;

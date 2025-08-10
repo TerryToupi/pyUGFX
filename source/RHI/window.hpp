@@ -26,6 +26,9 @@ namespace gfx
         virtual void ShutDown() = 0;
         virtual void Run(const GameLoop& func) = 0; 
 
+        virtual void CreateSwapChain() = 0;
+        virtual void CleanUpSwapChain() = 0;
+        virtual void ReCreateSwapChain() = 0;
         virtual gfx::TextureFormat GetSurfaceFormat() = 0;
 
 		virtual void GetWindowSize(int* width, int* heigh) = 0;

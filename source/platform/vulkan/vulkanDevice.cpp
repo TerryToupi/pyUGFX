@@ -57,6 +57,9 @@ void gfx::VulkanDevice::Init()
     CreateSurface();
     SelectPhysicalDevice();
     CreateLogicalDevice();
+    
+    VulkanWindow* window = static_cast<VulkanWindow*>(gfx::Window::instance.get());
+    window->CreateSwapChain();
 }
 
 void gfx::VulkanDevice::ShutDown()
@@ -100,7 +103,7 @@ void gfx::VulkanDevice::CreateInstance()
     
     #if defined(__APPLE__)
     {
-        createInfo.flags = VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR;
+        createInfo.flags |= VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR;
     }
     #endif
 
@@ -202,11 +205,11 @@ void gfx::VulkanDevice::SelectPhysicalDevice()
 void gfx::VulkanDevice::CreateLogicalDevice()
 {
     // Find queue families
-    QueueFamilyIndices indices = FindQueueFamilies(m_PhysicalDevice);
+    m_QueueIndices = FindQueueFamilies(m_PhysicalDevice);
 
     // Create queue families info
     std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
-    std::set<uint32_t> uniqueQueueFamilies = { indices.graphicsFamily.value(), indices.presentFamily.value() };
+    std::set<uint32_t> uniqueQueueFamilies = { m_QueueIndices.graphicsFamily.value(), m_QueueIndices.presentFamily.value() };
 
     float queuePriority = 1.0f;
     for (uint32_t queueFamily : uniqueQueueFamilies)
@@ -351,6 +354,16 @@ gfx::QueueFamilyIndices gfx::VulkanDevice::FindQueueFamilies(VkPhysicalDevice de
         {
             indices.graphicsFamily = i;
         }
+        
+        if (queueFamily.queueFlags & VK_QUEUE_COMPUTE_BIT)
+        {
+            indices.computeFamily = i;
+        }
+        
+        if (queueFamily.queueFlags & VK_QUEUE_TRANSFER_BIT)
+        {
+            indices.transferFamily = i;
+        }
 
         VkBool32 presentSupport = false;
         vkGetPhysicalDeviceSurfaceSupportKHR(device, i, window->GetSurface(), &presentSupport);
@@ -431,4 +444,24 @@ bool gfx::VulkanDevice::IsDeviceSuitable(VkPhysicalDevice device)
     }
 
     return indices.isComplete() && extensionsSupported && swapChainAdequate;
+}
+
+VkInstance gfx::VulkanDevice::GetInstance()
+{
+    return m_Instance;
+}
+
+VkDevice gfx::VulkanDevice::GetDevice()
+{
+    return m_Device;
+}
+
+VkPhysicalDevice gfx::VulkanDevice::GetAdapter()
+{
+    return m_PhysicalDevice;
+}
+
+gfx::QueueFamilyIndices gfx::VulkanDevice::GetQueueIndicies()
+{
+    return m_QueueIndices;
 }
