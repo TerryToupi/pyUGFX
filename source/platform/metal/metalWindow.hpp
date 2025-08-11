@@ -29,6 +29,7 @@ namespace gfx
     private:
         GLFWwindow* m_Window;
         NS::Window* m_NSwindow;
+        CA::MetalLayer* m_SwapChain;
     };
 }
 

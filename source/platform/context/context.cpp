@@ -24,11 +24,18 @@ static void VulkanInit()
 
 #if PYUGFX_ENABLE_METAL
 #include <metalDevice.hpp>
+#include <metalWindow.hpp>
 
 static void MetalInit()
 {
+    gfx::Window::instance = gfx::CreateShared<gfx::MetalWindow>();
     gfx::Device::instance = gfx::CreateShared<gfx::MetalDevice>();
 
+    gfx::Window::instance->Init({
+        .name = "Heavy",
+        .width = 800,
+        .height = 600,
+    });
     gfx::Device::instance->Init();
 }
 #endif

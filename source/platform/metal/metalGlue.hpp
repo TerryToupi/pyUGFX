@@ -9,6 +9,9 @@
 #include <Metal/Metal.hpp>
 #include <QuartzCore/QuartzCore.hpp>
 #include <Foundation/Foundation.hpp>
-#include <Appkit/AppKit.hpp>
+#include <AppKit/AppKit.hpp>
+
+#include <log.hpp>
+#include <assert.hpp>
 
 NS::Window* get_ns_window(GLFWwindow* window, CA::MetalLayer* layer);

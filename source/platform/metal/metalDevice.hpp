@@ -2,6 +2,7 @@
 #define __METAL_DEVICE_HPP__
 
 #include <device.hpp>
+#include <metalGlue.hpp>
 
 namespace gfx
 {
@@ -11,7 +12,10 @@ namespace gfx
 		virtual void Init() override;
 		virtual void ShutDown() override;
         
+        MTL::Device* GetDevice();
+        
     private:
+        MTL::Device* m_Device;
 	};
 }
 

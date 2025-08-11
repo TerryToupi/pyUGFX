@@ -11,7 +11,7 @@ void run()
 
 int main()
 {
-    setup::ContextInit(setup::Platforms::VULKAN);
+    setup::ContextInit();
 
     gfx::Window::instance->Run(run);
     
