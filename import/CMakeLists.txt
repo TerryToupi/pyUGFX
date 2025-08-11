@@ -121,12 +121,14 @@ if(PYUGFX_ENABLE_METAL)
     find_library(METAL Metal) 
     find_library(FOUNDATION Foundation)
     find_library(QUARTZCORE QuartzCore)
+    find_library(APPKIT AppKit)
 
     target_link_libraries(${PROJECT_NAME}
         INTERFACE stdc++
         INTERFACE "-framework Metal"
         INTERFACE "-framework Foundation"
         INTERFACE "-framework QuartzCore"
+        INTERFACE "-framework AppKit"
         INTERFACE objc
     )
 endif()

@@ -4,11 +4,13 @@
 #include <vector>
 #include <window.hpp>
 #include <vulkanCommon.hpp>
+
+#define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
 namespace gfx
 {
-    class VulkanWindow : public Window
+    class VulkanWindow final : public Window
     {
     public:
         virtual void Init(const WindowDescriptor&& desc) override;

@@ -12,6 +12,7 @@ file(GLOB_RECURSE UTILS_HEADERS CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/u
 # platform spacific files
 file(GLOB_RECURSE CONTEXT_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/platform/context/**.hpp" "${CMAKE_CURRENT_SOURCE_DIR}/platform/context/**.cpp")
 file(GLOB_RECURSE METAL_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/platform/metal/**.hpp" "${CMAKE_CURRENT_SOURCE_DIR}/platform/metal/**.cpp")
+file(GLOB_RECURSE METAL_OBJC_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/platform/metal/**.mm")
 file(GLOB_RECURSE VULKAN_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/platform/vulkan/**.hpp" "${CMAKE_CURRENT_SOURCE_DIR}/platform/vulkan/**.cpp")
 
 add_library(pyUGFX_library STATIC)
@@ -55,17 +56,27 @@ endif()
 if(PYUGFX_ENABLE_METAL)
     target_sources(pyUGFX_library
         PRIVATE ${METAL_FILES}
+        PRIVATE ${METAL_OBJC_FILES}
+    )
+    set_source_files_properties(${METAL_OBJC_FILES}
+        PROPERTIES LANGUAGE OBJCXX
     )
     target_include_directories(pyUGFX_library
         PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/platform/metal/"
     )
     group_sources_by_folder_from_list(METAL_FILES "${CMAKE_CURRENT_SOURCE_DIR}")
+    group_sources_by_folder_from_list(METAL_OBJC_FILES "${CMAKE_CURRENT_SOURCE_DIR}")
 endif()
 
 # platform definitions
 target_compile_definitions(pyUGFX_library
     PUBLIC PYUGFX_ENABLE_VULKAN=$<BOOL:${PYUGFX_ENABLE_VULKAN}>
     PUBLIC PYUGFX_ENABLE_METAL=$<BOOL:${PYUGFX_ENABLE_METAL}>
+)
+
+target_compile_definitions(pyUGFX_library PUBLIC
+    $<$<CONFIG:Debug>:DEBUG=1>
+    $<$<NOT:$<CONFIG:Debug>>:DEBUG=0>
 )
 
 target_link_libraries(pyUGFX_library

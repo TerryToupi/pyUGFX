@@ -20,7 +20,7 @@ namespace gfx
 
         bool isComplete()
         {
-            return graphicsFamily.has_value() && presentFamily.has_value();
+            return graphicsFamily.has_value() && presentFamily.has_value() && computeFamily.has_value() && transferFamily.has_value();
         }
     };
 
@@ -82,6 +82,10 @@ namespace gfx
             VK_KHR_DEDICATED_ALLOCATION_EXTENSION_NAME,
             VK_KHR_GET_MEMORY_REQUIREMENTS_2_EXTENSION_NAME,
             VK_KHR_BIND_MEMORY_2_EXTENSION_NAME,
+            
+            #if defined(__APPLE__)
+            VK_KHR_PORTABILITY_SUBSET_EXTENSION_NAME
+            #endif
         };
 
         const std::vector<const char*> m_ValidationLayers =

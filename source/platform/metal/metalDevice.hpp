@@ -7,8 +7,11 @@ namespace gfx
 {
 	class MetalDevice final : public Device
 	{
+    public:
 		virtual void Init() override;
 		virtual void ShutDown() override;
+        
+    private:
 	};
 }
 
