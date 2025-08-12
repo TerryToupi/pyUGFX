@@ -2,7 +2,7 @@
 #define __METAL_DEVICE_HPP__
 
 #include <device.hpp>
-#include <metalGlue.hpp>
+#include <metalCommon.hpp>
 
 namespace gfx
 {
