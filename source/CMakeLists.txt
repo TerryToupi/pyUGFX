@@ -58,9 +58,9 @@ if(PYUGFX_ENABLE_METAL)
         PRIVATE ${METAL_FILES}
         PRIVATE ${METAL_OBJC_FILES}
     )
-    set_source_files_properties(${METAL_OBJC_FILES}
-        PROPERTIES LANGUAGE OBJCXX
-    )
+    # set_source_files_properties(${METAL_OBJC_FILES}
+    #     PROPERTIES LANGUAGE OBJCXX
+    # )
     target_include_directories(pyUGFX_library
         PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/platform/metal/"
     )
@@ -70,14 +70,19 @@ endif()
 
 # platform definitions
 target_compile_definitions(pyUGFX_library
-    PUBLIC PYUGFX_ENABLE_VULKAN=$<BOOL:${PYUGFX_ENABLE_VULKAN}>
-    PUBLIC PYUGFX_ENABLE_METAL=$<BOOL:${PYUGFX_ENABLE_METAL}>
+    PUBLIC 
+        PYUGFX_ENABLE_VULKAN=$<BOOL:${PYUGFX_ENABLE_VULKAN}>
+        PYUGFX_ENABLE_METAL=$<BOOL:${PYUGFX_ENABLE_METAL}>
 )
 
 target_compile_definitions(pyUGFX_library 
     PUBLIC
         $<$<CONFIG:Debug>:DEBUG=1>
         $<$<NOT:$<CONFIG:Debug>>:DEBUG=0>
+)
+
+target_link_libraries(pyUGFX_library
+    PRIVATE ImportLibraries
 )
 
 if(${CMAKE_GENERATOR} MATCHES "Xcode")
@@ -87,7 +92,3 @@ if(${CMAKE_GENERATOR} MATCHES "Xcode")
             XCODE_SCHEME_WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} 
     )
 endif()
-
-target_link_libraries(pyUGFX_library
-    PRIVATE ImportLibraries
-)
