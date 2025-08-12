@@ -176,7 +176,7 @@ namespace gfx
         return VK_FILTER_MAX_ENUM;
     }
 
-    VkSamplerAddressMode DecodeWarpType(const gfx::Wrap& type)
+    VkSamplerAddressMode DecodeWrapType(const gfx::Wrap& type)
     {
         struct FlagMap {
             gfx::Wrap gfxFlag;
@@ -442,7 +442,7 @@ namespace gfx
         return VK_IMAGE_TYPE_MAX_ENUM;
     }
 
-    VkImageViewType DecodeTextureDimentionType(const gfx::TextureDimention& type)
+    VkImageViewType DecodeTextureDimensionType(const gfx::TextureDimention& type)
     {
         struct FlagMap {
             gfx::TextureDimention gfxFlag;
