@@ -93,7 +93,7 @@ void gfx::VulkanDevice::CreateInstance()
         .applicationVersion = VK_MAKE_VERSION(1, 0, 0),
         .pEngineName = "pyUGFX_library",
         .engineVersion = VK_MAKE_VERSION(1, 0, 0),
-        .apiVersion = VK_API_VERSION_1_4,
+        .apiVersion = VK_API_VERSION_1_3,
     };
 
     // Instance info
@@ -226,9 +226,14 @@ void gfx::VulkanDevice::CreateLogicalDevice()
     }
 
     VkPhysicalDeviceFeatures deviceFeatures = {};
+    
+    VkPhysicalDeviceDynamicRenderingFeaturesKHR dynRender{};
+    dynRender.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DYNAMIC_RENDERING_FEATURES_KHR;
+    dynRender.dynamicRendering = VK_TRUE;
 
     VkDeviceCreateInfo createInfo = {};
     createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+    createInfo.pNext = &dynRender;
     createInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());
     createInfo.pQueueCreateInfos = queueCreateInfos.data();
     createInfo.pEnabledFeatures = &deviceFeatures;
@@ -421,6 +426,17 @@ bool gfx::VulkanDevice::IsDeviceSuitable(VkPhysicalDevice device)
 {
     // Find queue families
     QueueFamilyIndices indices = FindQueueFamilies(device);
+    
+    // Check for dynamic rendering
+    VkPhysicalDeviceDynamicRenderingFeaturesKHR dynRenderFeatures{};
+    dynRenderFeatures.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DYNAMIC_RENDERING_FEATURES_KHR;
+
+    VkPhysicalDeviceFeatures2 deviceFeatures2{};
+    deviceFeatures2.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2;
+    deviceFeatures2.pNext = &dynRenderFeatures;
+
+    vkGetPhysicalDeviceFeatures2(device, &deviceFeatures2);
+    bool dynamicRenderingSupported = dynRenderFeatures.dynamicRendering;
 
     // Check device extension support
     uint32_t extensionCount;
@@ -444,7 +460,7 @@ bool gfx::VulkanDevice::IsDeviceSuitable(VkPhysicalDevice device)
         swapChainAdequate = !swapChainSupport.Formats.empty() && !swapChainSupport.PresentModes.empty();
     }
 
-    return indices.isComplete() && extensionsSupported && swapChainAdequate;
+    return indices.isComplete() && dynamicRenderingSupported && extensionsSupported && swapChainAdequate;
 }
 
 VkInstance gfx::VulkanDevice::GetInstance()

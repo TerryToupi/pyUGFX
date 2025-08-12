@@ -74,10 +74,19 @@ target_compile_definitions(pyUGFX_library
     PUBLIC PYUGFX_ENABLE_METAL=$<BOOL:${PYUGFX_ENABLE_METAL}>
 )
 
-target_compile_definitions(pyUGFX_library PUBLIC
-    $<$<CONFIG:Debug>:DEBUG=1>
-    $<$<NOT:$<CONFIG:Debug>>:DEBUG=0>
+target_compile_definitions(pyUGFX_library 
+    PUBLIC
+        $<$<CONFIG:Debug>:DEBUG=1>
+        $<$<NOT:$<CONFIG:Debug>>:DEBUG=0>
 )
+
+if(${CMAKE_GENERATOR} MATCHES "Xcode")
+    set_target_properties(pyUGFX_library
+        PROPERTIES 
+            XCODE_GENERATE_SCHEME TRUE
+            XCODE_SCHEME_WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} 
+    )
+endif()
 
 target_link_libraries(pyUGFX_library
     PRIVATE ImportLibraries

@@ -79,6 +79,7 @@ namespace gfx
         const std::vector<const char*> m_DeviceExtensions =
         {
             VK_KHR_SWAPCHAIN_EXTENSION_NAME,
+            VK_KHR_DYNAMIC_RENDERING_EXTENSION_NAME,
             VK_KHR_DEDICATED_ALLOCATION_EXTENSION_NAME,
             VK_KHR_GET_MEMORY_REQUIREMENTS_2_EXTENSION_NAME,
             VK_KHR_BIND_MEMORY_2_EXTENSION_NAME,
@@ -93,7 +94,7 @@ namespace gfx
             "VK_LAYER_KHRONOS_validation"
         };
 
-        #ifdef DEBUG
+        #if DEBUG
         const bool m_EnableValidationLayers = true;
         #else
         const bool m_EnableValidationLayers = false;
