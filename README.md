@@ -31,21 +31,18 @@ Choose one of the following methods based on your preferred toolchain:
 
 ```bash
 cmake -G "Visual Studio 17 2022" ..
-cmake --build .
 ```
 
 #### Using Xcode
 
 ```bash
 cmake -G "Xcode" ..
-cmake --build .
 ```
 
 #### Using Ninja
 
 ```bash
 cmake -G "Ninja" ..
-cmake --build .
 ```
 
 ## Dependencies
