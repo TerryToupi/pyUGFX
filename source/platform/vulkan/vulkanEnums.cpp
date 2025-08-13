@@ -653,7 +653,7 @@ namespace gfx
     {
         struct FlagMap {
             gfx::TextureFormat gfxFlag;
-            unsigned int wgpuFlag;
+            unsigned int vkFlag;
         };
 
         const FlagMap flagMaping[] =
@@ -682,7 +682,7 @@ namespace gfx
         {
             if (typeValue & static_cast<unsigned int>(flag.gfxFlag))
             {
-                return flag.wgpuFlag;
+                return flag.vkFlag;
             }
         }
 

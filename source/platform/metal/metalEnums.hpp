@@ -6,7 +6,7 @@
 
 namespace gfx
 {
-    MTL::Stages DecodeShaderType(const gfx::ShaderStage& type);
+    MTL::RenderStages DecodeShaderType(const gfx::ShaderStage& type);
     MTL::ArgumentType DecodeBufferBindingType(const gfx::BufferBindingType& type);
     MTL::CompareFunction DecodeCompareType(const gfx::Compare& type);
     MTL::VertexFormat DecodeVertexFormatType(const gfx::VertexFormat& type);
@@ -16,7 +16,7 @@ namespace gfx
     MTL::CullMode DecodeCullModeType(const gfx::CullMode& type);
     MTL::PixelFormat DecodeTextureFormatType(const gfx::TextureFormat& type);
     gfx::TextureFormat EncodeTextureFormatType(const MTL::PixelFormat& type);
-    MTL::PixelFormat DecodeTextureSampleType(const gfx::TextureSampleType& type); // Metal doesn't have sample type enums, so format-based
+    MTL::PixelFormat DecodeTextureSampleType(const gfx::TextureSampleType& type);
     MTL::ResourceOptions DecodeBufferUsageType(const gfx::BufferUsage& type);
     MTL::TextureType DecodeTextureType(const gfx::TextureType& type);
     MTL::TextureType DecodeTextureDimensionType(const gfx::TextureDimention& type);
