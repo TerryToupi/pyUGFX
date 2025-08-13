@@ -1,5 +1,5 @@
-[09:45:04] [trace] pyUGFX: Logger has been initialized!
-[09:45:04] [trace] pyUGFX: MacOS platform detected, Initializing Metal API!
-[09:45:04] [info] pyUGFX: [Metal Window] Initiliazing Metal window!
-[09:45:07] [info] pyUGFX: [Metal Window] Terminating active window!
-[09:45:07] [info] pyUGFX: [Metal Window] Shutting down window manager!
+[09:58:01] [trace] pyUGFX: Logger has been initialized!
+[09:58:01] [trace] pyUGFX: MacOS platform detected, Initializing Metal API!
+[09:58:01] [info] pyUGFX: [Metal Window] Initiliazing Metal window!
+[09:58:19] [info] pyUGFX: [Metal Window] Terminating active window!
+[09:58:19] [info] pyUGFX: [Metal Window] Shutting down window manager!
