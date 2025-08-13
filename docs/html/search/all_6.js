@@ -1,0 +1,21 @@
+var searchData=
+[
+  ['g_0',['G',['../namespaceinput.html#ac1fcd7522022ab8c5987ed99ee90830fadfcf28d0734569a6a693bc8194de62bf',1,'input']]],
+  ['g_1',['g',['../structgfx_1_1_render_pass_descriptor_1_1_clear_color.html#abd7b1e093d509b6c196ab4cee750fa27',1,'gfx::RenderPassDescriptor::ClearColor']]],
+  ['gameloop_2',['GameLoop',['../classgfx_1_1_window.html#a3519deda11ab77cfbb20b5b77c84cdef',1,'gfx::Window']]],
+  ['get_3',['Get',['../classgfx_1_1_draw_stream_encoder.html#aa0bedb31778227bd10dede3d3779c923',1,'gfx::DrawStreamEncoder::Get()'],['../classutils_1_1_pool.html#aebabe7c81b539030d5f70a612ff9fa0f',1,'utils::Pool::Get()']]],
+  ['getkey_4',['GetKey',['../classgfx_1_1_window.html#ac8ca6c0cd672c9fb875fc271c97ced9a',1,'gfx::Window']]],
+  ['getmousebutton_5',['GetMouseButton',['../classgfx_1_1_window.html#a2d9a94b26984725ad3e72a78020a808b',1,'gfx::Window']]],
+  ['getmousepos_6',['GetMousePos',['../classgfx_1_1_window.html#a21d37dc734f83950c4ec4d3ed24d65f6',1,'gfx::Window']]],
+  ['getsurfaceformat_7',['GetSurfaceFormat',['../classgfx_1_1_window.html#afea415dc69f9a5886bcb0a05cfb26648',1,'gfx::Window']]],
+  ['getwindowsize_8',['GetWindowSize',['../classgfx_1_1_window.html#a1c9c3316f2b85897f228a9eba1e67ca0',1,'gfx::Window']]],
+  ['gfx_9',['gfx',['../namespacegfx.html',1,'']]],
+  ['gpu_5fcpu_10',['GPU_CPU',['../namespacegfx.html#ab939b7233e93ee2ad6145e4d5c82c756a90ae09a72eb23aa77726884a8b0cce02',1,'gfx']]],
+  ['gpu_5fonly_11',['GPU_ONLY',['../namespacegfx.html#ab939b7233e93ee2ad6145e4d5c82c756a95c8166e4f408834884bbe57fef928f6',1,'gfx']]],
+  ['graphics_12',['GRAPHICS',['../namespacegfx.html#a247f5c6c57ebe45f06854145906e33e1a6f49448c79d7d58c6e60cf7129b84d1c',1,'gfx']]],
+  ['graphicsstate_13',['GraphicsState',['../structgfx_1_1_shader_descriptor_1_1_graphics_state.html',1,'gfx::ShaderDescriptor']]],
+  ['graphicsstate_14',['graphicsState',['../structgfx_1_1_shader_descriptor.html#adcf7baab600d6b1fea92c1c278655a47',1,'gfx::ShaderDescriptor']]],
+  ['grave_5faccent_15',['GRAVE_ACCENT',['../namespaceinput.html#ac1fcd7522022ab8c5987ed99ee90830fa1547ad05c44be2cc614be32159bf666b',1,'input']]],
+  ['greater_16',['GREATER',['../namespacegfx.html#a53deffd6493da26563e806c6b06cfe35ae7e72355289e404b762d4cf88824d23b',1,'gfx']]],
+  ['greater_5for_5fequal_17',['GREATER_OR_EQUAL',['../namespacegfx.html#a53deffd6493da26563e806c6b06cfe35aa6872139811c4046ad15aa6763956a4f',1,'gfx']]]
+];

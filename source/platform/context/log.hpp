@@ -1,3 +1,5 @@
+/// \cond
+
 #ifndef __LOGGING_HPP__
 #define __LOGGING_HPP__
 
@@ -29,3 +31,5 @@ namespace diag
 #define GFX_CRITICAL(...)      ::diag::Logger::GetLogger()->critical(__VA_ARGS__)
 
 #endif
+
+/// \endcond

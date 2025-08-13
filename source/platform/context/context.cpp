@@ -1,3 +1,5 @@
+/// \cond
+
 #include <context.hpp>
 #include <log.hpp>
 
@@ -107,3 +109,4 @@ void setup::ContextInit(Platforms platform)
 	}
 }
 
+/// \endcond

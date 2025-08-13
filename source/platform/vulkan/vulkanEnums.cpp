@@ -1,3 +1,5 @@
+/// \cond
+
 #include <vulkanEnums.hpp>
 
 namespace gfx
@@ -689,3 +691,5 @@ namespace gfx
         return 0;
     }
 }
+
+/// \endcond

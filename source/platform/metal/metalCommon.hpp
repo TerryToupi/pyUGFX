@@ -1,3 +1,5 @@
+/// \cond
+
 #ifndef __METAL_COMMON_HPP__
 #define __METAL_COMMON_HPP__
 
@@ -10,3 +12,5 @@
 #include <assert.hpp>
 
 #endif
+
+/// \endcond

@@ -1,3 +1,5 @@
+/// \cond
+
 #include <vulkanDevice.hpp>
 #include <vulkanWindow.hpp>
 
@@ -482,3 +484,5 @@ gfx::QueueFamilyIndices gfx::VulkanDevice::GetQueueIndicies()
 {
     return m_QueueIndices;
 }
+
+/// \endcond

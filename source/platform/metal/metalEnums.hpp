@@ -1,3 +1,5 @@
+/// \cond
+
 #ifndef __METAL_ENUMS_HPP__
 #define __METAL_ENUMS_HPP__
 
@@ -31,3 +33,4 @@ namespace gfx
 
 #endif // !__METAL_ENUMS_HPP__
 
+/// \endcond

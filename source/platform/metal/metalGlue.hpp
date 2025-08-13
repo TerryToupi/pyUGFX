@@ -1,3 +1,5 @@
+/// \cond
+
 #pragma once
 
 #define GLFW_INCLUDE_NONE
@@ -9,3 +11,5 @@
 #include <metalCommon.hpp>
 
 NS::Window* get_ns_window(GLFWwindow* window, CA::MetalLayer* layer);
+
+/// \endcond

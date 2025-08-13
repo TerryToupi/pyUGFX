@@ -1,3 +1,5 @@
+/// \cond
+
 #ifndef __VULKAN_WINDOW_HPP__
 #define __VULKAN_WINDOW_HPP__
 
@@ -52,3 +54,5 @@ namespace gfx
 }
 
 #endif
+
+/// \endcond

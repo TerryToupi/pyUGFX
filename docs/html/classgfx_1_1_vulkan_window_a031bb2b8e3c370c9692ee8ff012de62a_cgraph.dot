@@ -1,0 +1,13 @@
+digraph "gfx::VulkanWindow::ReCreateSwapChain"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [id="Node000001",label="gfx::VulkanWindow::\lReCreateSwapChain",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Recreates the swap chain, usually after a resize."];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="gfx::VulkanWindow::\lCleanUpSwapChain",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classgfx_1_1_vulkan_window.html#a16317d470e0e12a6bfd859bce8533aca",tooltip="Cleans up the swap chain resources."];
+  Node1 -> Node3 [id="edge2_Node000001_Node000003",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="gfx::VulkanWindow::\lCreateSwapChain",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classgfx_1_1_vulkan_window.html#ac3d7dad9438f69bc6ef4d89ecab000fd",tooltip="Creates the swap chain for rendering."];
+}

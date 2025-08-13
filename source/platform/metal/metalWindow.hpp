@@ -1,3 +1,5 @@
+/// \cond
+
 #ifndef __METAL_WINDOW_HPP__
 #define __METAL_WINDOW_HPP__
 
@@ -34,3 +36,5 @@ namespace gfx
 }
 
 #endif
+
+/// \endcond

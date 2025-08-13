@@ -1,3 +1,5 @@
+/// \cond
+
 #ifndef __ASSERT_HPP__
 #define __ASSERT_HPP__
 
@@ -25,3 +27,5 @@
 #define GFX_ASSERT(...) GFX_EXPAND_MACRO( GFX_INTERNAL_ASSERT_GET_MACRO(__VA_ARGS__)(_, __VA_ARGS__) )
 
 #endif // !__ASSERT_HPP__
+
+/// \endcond

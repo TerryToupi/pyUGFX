@@ -1,3 +1,5 @@
+/// \cond
+
 #include <metalEnums.hpp>
 
 namespace gfx
@@ -682,3 +684,5 @@ namespace gfx
         return 0;
     }
 }
+
+/// \endcond

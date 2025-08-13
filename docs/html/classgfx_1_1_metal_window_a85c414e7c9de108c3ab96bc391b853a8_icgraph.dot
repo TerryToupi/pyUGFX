@@ -1,0 +1,11 @@
+digraph "gfx::MetalWindow::CreateSwapChain"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="RL";
+  Node1 [id="Node000001",label="gfx::MetalWindow::Create\lSwapChain",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Creates the swap chain for rendering."];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="gfx::MetalDevice::Init",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classgfx_1_1_metal_device.html#a03e4bde72c76e8117f8b6ef61c2bc244",tooltip="Initializes the GPU device."];
+}

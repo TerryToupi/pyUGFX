@@ -1,3 +1,5 @@
+/// \cond
+
 #ifndef __vulkan_common_hpp__
 #define __vulkan_common_hpp__
 
@@ -12,3 +14,5 @@ inline void VK_CHECK(VkResult r, const char* context = "") {
 }
 
 #endif
+
+/// \endcond

@@ -1,3 +1,5 @@
+/// \cond
+
 #include <vulkanWindow.hpp>
 #include <vulkanDevice.hpp>
 
@@ -243,3 +245,4 @@ VkSurfaceKHR gfx::VulkanWindow::GetSurface()
     return m_Surface;
 }
 
+/// \endcond

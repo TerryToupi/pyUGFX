@@ -1,3 +1,5 @@
+/// \cond
+
 #ifndef __VULKAN_ENUMS_HPP__
 #define __VULKAN_ENUMS_HPP__
 
@@ -30,3 +32,5 @@ namespace gfx
 }
 
 #endif // !__VULKAN_ENUMS_HPP__
+
+/// \endcond

@@ -1,3 +1,5 @@
+/// \cond
+
 #include <metalDevice.hpp>
 #include <metalWindow.hpp>
 
@@ -19,3 +21,5 @@ MTL::Device* gfx::MetalDevice::GetDevice()
 {
     return m_Device;
 }
+
+/// \endcond

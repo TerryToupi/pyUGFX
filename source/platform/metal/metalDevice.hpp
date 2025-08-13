@@ -1,3 +1,5 @@
+/// \cond
+
 #ifndef __METAL_DEVICE_HPP__
 #define __METAL_DEVICE_HPP__
 
@@ -20,3 +22,5 @@ namespace gfx
 }
 
 #endif
+
+/// \endcond

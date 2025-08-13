@@ -1,3 +1,5 @@
+/// \cond
+
 #import <metalGlue.hpp>
 
 NS::Window* get_ns_window(GLFWwindow* window, CA::MetalLayer* layer)
@@ -10,3 +12,5 @@ NS::Window* get_ns_window(GLFWwindow* window, CA::MetalLayer* layer)
     
     return (__bridge NS::Window*)w;
 }
+
+/// \endcond

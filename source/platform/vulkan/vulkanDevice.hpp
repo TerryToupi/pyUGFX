@@ -1,3 +1,5 @@
+/// \cond
+
 #ifndef __VULKAN_DEVICE_HPP__
 #define __VULKAN_DEVICE_HPP__
 
@@ -103,3 +105,5 @@ namespace gfx
 }
 
 #endif
+
+/// \endcond

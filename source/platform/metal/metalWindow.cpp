@@ -1,3 +1,5 @@
+/// \cond
+
 #include <metalWindow.hpp>
 #include <metalDevice.hpp>
 
@@ -90,3 +92,5 @@ void gfx::MetalWindow::GetMousePos(double* x, double* y)
 {
     
 }
+
+/// \endcond
