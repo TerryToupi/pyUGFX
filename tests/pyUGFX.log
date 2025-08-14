@@ -1,5 +1,11 @@
-[11:54:25] [trace] pyUGFX: Logger has been initialized!
-[11:54:25] [trace] pyUGFX: MacOS platform detected, Initializing Metal API!
-[11:54:25] [info] pyUGFX: [Metal Window] Initiliazing Metal window!
-[11:54:27] [info] pyUGFX: [Metal Window] Terminating active window!
-[11:54:27] [info] pyUGFX: [Metal Window] Shutting down window manager!
+[14:38:24] [trace] pyUGFX: Logger has been initialized!
+[14:38:24] [trace] pyUGFX: Initializing Vulkan!
+[14:38:24] [info] pyUGFX: [Vulkan Window] Initiliazing Vulkan window!
+[14:38:26] [trace] pyUGFX: [GENERAL] Validation layer: Searching for ICD drivers named ../../../lib/libMoltenVK.dylib
+
+[14:38:26] [trace] pyUGFX: [GENERAL] Validation layer: Loading layer library /usr/local/share/vulkan/explicit_layer.d/../../../lib/libVkLayer_khronos_validation.dylib
+
+[14:38:29] [info] pyUGFX: [Vulkan Window] Terminating active window!
+[14:38:29] [info] pyUGFX: [Vulkan Window] Shutting down window manager!
+[14:38:29] [trace] pyUGFX: [GENERAL] Validation layer: Unloading layer library /usr/local/share/vulkan/explicit_layer.d/../../../lib/libVkLayer_khronos_validation.dylib
+
