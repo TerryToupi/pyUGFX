@@ -10,10 +10,10 @@ namespace gfx
     {
     public:
         VulkanDynamicBuffers(const DynamicBuffersDescriptor&& desc);
-        
+
     private:
         int data;
-    }
+    };
 }
 
 #endif

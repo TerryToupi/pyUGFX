@@ -10,10 +10,10 @@ namespace gfx
     {
     public:
         VulkanSampler(const SamplerDescriptor&& desc);
-        
+
     private:
         int data;
-    }
+    };
 }
 
 #endif

@@ -10,10 +10,10 @@ namespace gfx
     {
     public:
         VulkanTexture(const TextureDescriptor&& desc);
-        
+
     private:
         int data;
-    }
+    };
 }
 
 #endif

@@ -10,10 +10,10 @@ namespace gfx
     {
     public:
         MetalTexture(const TextureDescriptor&& desc);
-        
+
     private:
         int data;
-    }
+    };
 }
 
 #endif

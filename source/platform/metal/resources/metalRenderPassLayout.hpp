@@ -10,10 +10,10 @@ namespace gfx
     {
     public:
         MetalRenderPassLayout(const RenderPassLayoutDescriptor&& desc);
-        
+
     private:
         int data;
-    }
+    };
 }
 
 #endif

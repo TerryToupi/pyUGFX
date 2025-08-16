@@ -10,10 +10,10 @@ namespace gfx
     {
     public:
         MetalDynamicBuffers(const DynamicBuffersDescriptor&& desc);
-        
+
     private:
         int data;
-    }
+    };
 }
 
 #endif

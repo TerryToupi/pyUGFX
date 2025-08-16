@@ -10,10 +10,10 @@ namespace gfx
     {
     public:
         MetalShader(const ShaderDescriptor&& desc);
-        
+
     private:
         int data;
-    }
+    };
 }
 
 #endif

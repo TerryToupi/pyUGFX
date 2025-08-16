@@ -10,10 +10,10 @@ namespace gfx
     {
     public:
         VulkanRenderPass(const RenderPassDescriptor&& desc);
-        
+
     private:
         int data;
-    }
+    };
 }
 
 #endif

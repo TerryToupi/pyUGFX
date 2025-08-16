@@ -10,10 +10,10 @@ namespace gfx
     {
     public:
         VulkanBindGroupLayout(const BindGroupLayoutDescriptor&& desc);
-        
+
     private:
         int data;
-    }
+    };
 }
 
 #endif

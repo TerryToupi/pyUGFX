@@ -10,10 +10,10 @@ namespace gfx
     {
     public:
         MetalSampler(const SamplerDescriptor&& desc);
-        
+
     private:
         int data;
-    }
+    };
 }
 
 #endif

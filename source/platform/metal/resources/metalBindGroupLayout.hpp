@@ -10,10 +10,10 @@ namespace gfx
     {
     public:
         MetalBindGroupLayout(const BindGroupLayoutDescriptor&& desc);
-        
+
     private:
         int data;
-    }
+    };
 }
 
 #endif

@@ -10,10 +10,10 @@ namespace gfx
     {
     public:
         VulkanShader(const ShaderDescriptor&& desc);
-        
+
     private:
         int data;
-    }
+    };
 }
 
 #endif
