@@ -1,11 +1,11 @@
-[14:38:24] [trace] pyUGFX: Logger has been initialized!
-[14:38:24] [trace] pyUGFX: Initializing Vulkan!
-[14:38:24] [info] pyUGFX: [Vulkan Window] Initiliazing Vulkan window!
-[14:38:26] [trace] pyUGFX: [GENERAL] Validation layer: Searching for ICD drivers named ../../../lib/libMoltenVK.dylib
+[18:07:18] [trace] pyUGFX: Logger has been initialized!
+[18:07:18] [trace] pyUGFX: Initializing Vulkan!
+[18:07:18] [info] pyUGFX: [Vulkan Window] Initiliazing Vulkan window!
+[18:07:20] [trace] pyUGFX: [GENERAL] Validation layer: Searching for ICD drivers named ../../../lib/libMoltenVK.dylib
 
-[14:38:26] [trace] pyUGFX: [GENERAL] Validation layer: Loading layer library /usr/local/share/vulkan/explicit_layer.d/../../../lib/libVkLayer_khronos_validation.dylib
+[18:07:20] [trace] pyUGFX: [GENERAL] Validation layer: Loading layer library /usr/local/share/vulkan/explicit_layer.d/../../../lib/libVkLayer_khronos_validation.dylib
 
-[14:38:29] [info] pyUGFX: [Vulkan Window] Terminating active window!
-[14:38:29] [info] pyUGFX: [Vulkan Window] Shutting down window manager!
-[14:38:29] [trace] pyUGFX: [GENERAL] Validation layer: Unloading layer library /usr/local/share/vulkan/explicit_layer.d/../../../lib/libVkLayer_khronos_validation.dylib
+[18:07:23] [info] pyUGFX: [Vulkan Window] Terminating active window!
+[18:07:23] [info] pyUGFX: [Vulkan Window] Shutting down window manager!
+[18:07:23] [trace] pyUGFX: [GENERAL] Validation layer: Unloading layer library /usr/local/share/vulkan/explicit_layer.d/../../../lib/libVkLayer_khronos_validation.dylib
 
