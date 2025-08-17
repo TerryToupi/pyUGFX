@@ -11,7 +11,7 @@ void run()
 
 int main()
 {
-    setup::ContextInit(setup::Platforms::VULKAN);
+    setup::ContextInit(setup::Platforms::UNDEFINED);
 
     utils::Handle<gfx::Buffer> buffer = gfx::ResourceManager::instance->CreateBuffer({
             .usage = gfx::BufferUsage::VERTEX
