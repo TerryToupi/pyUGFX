@@ -3,3 +3,7 @@
 gfx::MetalSampler::MetalSampler(const SamplerDescriptor&& desc)
 {
 }
+
+void gfx::MetalSampler::Remove()
+{
+}
