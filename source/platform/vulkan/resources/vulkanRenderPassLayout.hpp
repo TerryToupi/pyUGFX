@@ -9,7 +9,10 @@ namespace gfx
     class VulkanRenderPassLayout
     {
     public:
+        VulkanRenderPassLayout() = default;
         VulkanRenderPassLayout(const RenderPassLayoutDescriptor&& desc);
+
+        void Remove();
 
     private:
         int data;

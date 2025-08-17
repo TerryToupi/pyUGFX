@@ -9,7 +9,10 @@ namespace gfx
     class MetalDynamicBuffers
     {
     public:
+        MetalDynamicBuffers() = default;
         MetalDynamicBuffers(const DynamicBuffersDescriptor&& desc);
+
+        void Remove();
 
     private:
         int data;

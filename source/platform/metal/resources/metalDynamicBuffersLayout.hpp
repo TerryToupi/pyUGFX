@@ -9,7 +9,10 @@ namespace gfx
     class MetalDynamicBuffersLayout
     {
     public:
+        MetalDynamicBuffersLayout() = default;
         MetalDynamicBuffersLayout(const DynamicBuffersLayoutDescriptor&& desc);
+
+        void Remove();
 
     private:
         int data;

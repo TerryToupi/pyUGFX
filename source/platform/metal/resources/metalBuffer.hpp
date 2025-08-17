@@ -9,7 +9,10 @@ namespace gfx
     class MetalBuffer
     {
     public:
+        MetalBuffer() = default;
         MetalBuffer(const BufferDescriptor&& desc);
+
+        void Remove();
         
     private:
         int data;

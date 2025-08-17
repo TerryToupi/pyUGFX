@@ -9,10 +9,13 @@ namespace gfx
     class VulkanBindGroup
     {
     public:
+        VulkanBindGroup() = default;
         VulkanBindGroup(const BindGroupDescriptor&& desc);
+
+        void Remove();
         
     private:
-        int data;
+        int data = 0;
     };
 }
 

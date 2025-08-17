@@ -9,8 +9,11 @@ namespace gfx
     class VulkanBuffer
     {
     public:
+        VulkanBuffer() = default;
         VulkanBuffer(const BufferDescriptor&& desc);
         
+        void Remove();
+
     private:
         int data;
     };

@@ -9,7 +9,10 @@ namespace gfx
     class VulkanTexture
     {
     public:
+        VulkanTexture() = default;
         VulkanTexture(const TextureDescriptor&& desc);
+
+        void Remove();
 
     private:
         int data;

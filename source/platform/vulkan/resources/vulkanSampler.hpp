@@ -9,7 +9,10 @@ namespace gfx
     class VulkanSampler
     {
     public:
+        VulkanSampler() = default;
         VulkanSampler(const SamplerDescriptor&& desc);
+
+        void Remove();
 
     private:
         int data;

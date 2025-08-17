@@ -9,7 +9,10 @@ namespace gfx
     class VulkanRenderPass
     {
     public:
+        VulkanRenderPass() = default;
         VulkanRenderPass(const RenderPassDescriptor&& desc);
+
+        void Remove();
 
     private:
         int data;

@@ -9,7 +9,10 @@ namespace gfx
     class VulkanShader
     {
     public:
+        VulkanShader() = default;
         VulkanShader(const ShaderDescriptor&& desc);
+
+        void Remove();
 
     private:
         int data;

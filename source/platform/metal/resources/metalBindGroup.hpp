@@ -9,7 +9,10 @@ namespace gfx
     class MetalBindGroup
     {
     public:
+        MetalBindGroup() = default;
         MetalBindGroup(const BindGroupDescriptor&& desc);
+
+        void Remove();
         
     private:
         int data;

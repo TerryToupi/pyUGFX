@@ -9,7 +9,10 @@ namespace gfx
     class VulkanDynamicBuffers
     {
     public:
+        VulkanDynamicBuffers() = default;
         VulkanDynamicBuffers(const DynamicBuffersDescriptor&& desc);
+       
+        void Remove();
 
     private:
         int data;

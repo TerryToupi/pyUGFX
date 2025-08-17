@@ -9,7 +9,10 @@ namespace gfx
     class MetalBindGroupLayout
     {
     public:
+        MetalBindGroupLayout() = default;
         MetalBindGroupLayout(const BindGroupLayoutDescriptor&& desc);
+
+        void Remove();
 
     private:
         int data;

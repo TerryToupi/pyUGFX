@@ -9,7 +9,10 @@ namespace gfx
     class MetalShader
     {
     public:
+        MetalShader() = default;
         MetalShader(const ShaderDescriptor&& desc);
+
+        void Remove();
 
     private:
         int data;

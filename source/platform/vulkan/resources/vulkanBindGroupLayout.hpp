@@ -9,7 +9,10 @@ namespace gfx
     class VulkanBindGroupLayout
     {
     public:
+        VulkanBindGroupLayout() = default;
         VulkanBindGroupLayout(const BindGroupLayoutDescriptor&& desc);
+
+        void Remove();
 
     private:
         int data;

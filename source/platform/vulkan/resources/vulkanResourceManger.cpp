@@ -44,33 +44,93 @@ utils::Handle<gfx::RenderPassLayout> gfx::VulkanResourceManager::CreateRenderPas
 
 void gfx::VulkanResourceManager::Remove(utils::Handle<gfx::Shader> handle)
 {
+	VulkanShader* shader = m_Shaders.Get(handle);
+	if (!shader)
+		return;
+
+	shader->Remove();
+	m_Shaders.Remove(handle);
 }
 void gfx::VulkanResourceManager::Remove(utils::Handle<gfx::BindGroup> handle)
 {
+	VulkanBindGroup* bindGroup = m_BindGroups.Get(handle);
+	if (!bindGroup)
+		return;
+
+	bindGroup->Remove();
+	m_BindGroups.Remove(handle);
 }
 void gfx::VulkanResourceManager::Remove(utils::Handle<gfx::BindGroupLayout> handle)
 {
+	VulkanBindGroupLayout* bindGroupLayout = m_BindGroupLayouts.Get(handle);
+	if (!bindGroupLayout)
+		return;
+
+	bindGroupLayout->Remove();
+	m_BindGroupLayouts.Remove(handle);
 }
 void gfx::VulkanResourceManager::Remove(utils::Handle<gfx::Texture> handle)
 {
+	VulkanTexture* texture = m_Textures.Get(handle);
+	if (!texture)
+		return;
+
+	texture->Remove();
+	m_Textures.Remove(handle);
 }
 void gfx::VulkanResourceManager::Remove(utils::Handle<gfx::Sampler> handle)
 {
+	VulkanSampler* sampler = m_Samplers.Get(handle);
+	if (!sampler)
+		return;
+
+	sampler->Remove();
+	m_Samplers.Remove(handle);
 }
 void gfx::VulkanResourceManager::Remove(utils::Handle<gfx::Buffer> handle)
 {
+	VulkanBuffer* buffer = m_Buffers.Get(handle);
+	if (!buffer)
+		return;
+
+	buffer->Remove();
+	m_Buffers.Remove(handle);
 }
 void gfx::VulkanResourceManager::Remove(utils::Handle<gfx::DynamicBuffers> handle)
 {
+	VulkanDynamicBuffers* dynamic = m_DynamicBuffers.Get(handle);
+	if (!dynamic)
+		return;
+
+	dynamic->Remove();
+	m_DynamicBuffers.Remove(handle);
 }
 void gfx::VulkanResourceManager::Remove(utils::Handle<gfx::DynamicBuffersLayout> handle)
 {
+	VulkanDynamicBuffersLayout* dynamic = m_DynamicBuffersLayout.Get(handle);
+	if (!dynamic)
+		return;
+
+	dynamic->Remove();
+	m_DynamicBuffersLayout.Remove(handle);
 }
 void gfx::VulkanResourceManager::Remove(utils::Handle<gfx::RenderPass> handle)
 {
+	VulkanRenderPass* renderPass = m_RenderPasses.Get(handle);
+	if (!renderPass)
+		return;
+
+	renderPass->Remove();
+	m_RenderPasses.Remove(handle);
 }
 void gfx::VulkanResourceManager::Remove(utils::Handle<gfx::RenderPassLayout> handle)
 {
+	VulkanRenderPassLayout* renderLayout = m_RenderPassLayouts.Get(handle);
+	if (!renderLayout)
+		return;
+
+	renderLayout->Remove();
+	m_RenderPassLayouts.Remove(handle);
 }
 
 void gfx::VulkanResourceManager::SetBufferData(utils::Handle<Buffer> buffer, uint32_t offset, const void* data, uint32_t size)

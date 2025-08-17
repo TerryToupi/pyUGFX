@@ -1,8 +1,8 @@
 #include <iostream>
 #include <window.hpp>
 #include <handle.hpp>
-#include <resources/buffer.hpp>
 #include <context.hpp>
+#include <resources/resourceManger.hpp>
 
 void run()
 {
@@ -13,7 +13,13 @@ int main()
 {
     setup::ContextInit(setup::Platforms::VULKAN);
 
+    utils::Handle<gfx::Buffer> buffer = gfx::ResourceManager::instance->CreateBuffer({
+            .usage = gfx::BufferUsage::VERTEX
+        });
+
     gfx::Window::instance->Run(run);
+
+    gfx::ResourceManager::instance->Remove(buffer);
     
     setup::ContextShutDown();
     return 0;

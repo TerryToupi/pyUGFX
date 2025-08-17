@@ -9,7 +9,10 @@ namespace gfx
     class MetalRenderPassLayout
     {
     public:
+        MetalRenderPassLayout() = default;
         MetalRenderPassLayout(const RenderPassLayoutDescriptor&& desc);
+
+        void Remove();
 
     private:
         int data;

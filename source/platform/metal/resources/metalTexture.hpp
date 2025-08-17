@@ -9,7 +9,10 @@ namespace gfx
     class MetalTexture
     {
     public:
+        MetalTexture() = default;
         MetalTexture(const TextureDescriptor&& desc);
+
+        void Remove();
 
     private:
         int data;
