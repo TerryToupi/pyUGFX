@@ -43,6 +43,10 @@
 # logs
 *.log
 
+# visual studio / code
+*.vs
+*.VS
+
 # External libraries
 import/vulkan-headers/
 import/volk/
