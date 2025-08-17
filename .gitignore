@@ -1,67 +1,109 @@
-# Prerequisites
-*.d
-
-# Compiled Object files
-*.slo
-*.lo
+# Compiled object files
 *.o
 *.obj
+*.lo
+*.slo
 
-# Precompiled Headers
-*.gch
-*.pch
+# Compiled binary files
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
 
-# Linker files
-*.ilk
-
-# Debugger Files
-*.pdb
-
-# Compiled Dynamic libraries
+# Compiled dynamic libraries
 *.so
 *.dylib
 *.dll
 
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
+# Compiled static libraries
 *.a
 *.lib
 
-# Executables
-*.exe
-*.out
-*.app
+# Debug / Release folders
+[Dd]ebug/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
 
-# debug information files
-*.dwo
+# CMake generated files
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+Testing/
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
 
-# logs
+# Custom build output folder
+/out/
+
+# Visual Studio specific
+*.VC.db
+*.VC.opendb
+*.sdf
+*.suo
+*.ncb
+*.user
+*.userosscache
+*.sln.docstates
+*.ipch
+*.pdb
+*.idb
+
+# Visual Studio Code
+.vscode/
+.vs/
+
+# Xcode specific
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+*.xccheckout
+*.moved-aside
+DerivedData/
+*.hmap
+*.ipa
+*.xcuserstate
+project.xcworkspace/
+
+# Logs / temp files
 *.log
+*.swp
+*.tmp
+*.temp
 
-# visual studio / code
-*.vs
-*.VS
-
-# External libraries
-import/vulkan-headers/
-import/volk/
-import/vulkanmemoryallocator/
-import/glfw/
-import/pybind11/
-import/spdlog/
-import/shaderc/
-import/spirv-headers/
-import/spirv-tools/
-import/glslang/
-import/metal-headers/
-
-# Executables/IDE folder
-out/
-
-# macos .DS_Store
+# Mac OS files
 .DS_Store
+*.AppleDouble
+.LSOverride
+
+# Windows files
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# imports
+/import/glfw/
+/import/glslang/
+/import/metal-headers/
+/import/pybind11/
+/import/shaderc/
+/import/spdlog/
+/import/spirv-headers/
+/import/spirv-tools/
+/import/volk/
+/import/vulkan-headers/
+/import/vulkanmemoryallocator/
