@@ -72,16 +72,16 @@ namespace gfx
         gfx::VulkanRenderPassLayout*      Get(utils::Handle<gfx::RenderPassLayout> handle);
 
     private:
-        utils::Pool<gfx::VulkanShader, gfx::Shader> m_Shaders{ 32u, "Shaders" };
-        utils::Pool<gfx::VulkanBindGroup, gfx::BindGroup> m_BindGroups{ 32u, "BindGroups" };
-        utils::Pool<gfx::VulkanBindGroupLayout, gfx::BindGroupLayout> m_BindGroupLayouts{ 32u, "BindGroupLayouts" };
+        utils::Pool<gfx::VulkanShader, gfx::Shader> m_Shaders{ 16u, "Shaders" };
+        utils::Pool<gfx::VulkanBindGroup, gfx::BindGroup> m_BindGroups{ 16u, "BindGroups" };
+        utils::Pool<gfx::VulkanBindGroupLayout, gfx::BindGroupLayout> m_BindGroupLayouts{ 16u, "BindGroupLayouts" };
         utils::Pool<gfx::VulkanTexture, gfx::Texture> m_Textures{ 32u, "Textures" };
         utils::Pool<gfx::VulkanSampler, gfx::Sampler> m_Samplers{ 32u, "Samplers" };
         utils::Pool<gfx::VulkanBuffer, gfx::Buffer> m_Buffers{ 32u, "Buffers" };
-        utils::Pool<gfx::VulkanDynamicBuffers, gfx::DynamicBuffers> m_DynamicBuffers{ 32u, "DynamicBuffers" };
-        utils::Pool<gfx::VulkanDynamicBuffersLayout, gfx::DynamicBuffersLayout> m_DynamicBuffersLayout{ 32u, "DynamicBuffersLayout" };
-        utils::Pool<gfx::VulkanRenderPass, gfx::RenderPass> m_RenderPasses{ 32u, "RenderPasses" };
-        utils::Pool<gfx::VulkanRenderPassLayout, gfx::RenderPassLayout> m_RenderPassLayouts{ 32u, "RenderPassLayouts" };
+        utils::Pool<gfx::VulkanDynamicBuffers, gfx::DynamicBuffers> m_DynamicBuffers{ 16u, "DynamicBuffers" };
+        utils::Pool<gfx::VulkanDynamicBuffersLayout, gfx::DynamicBuffersLayout> m_DynamicBuffersLayout{ 16u, "DynamicBuffersLayout" };
+        utils::Pool<gfx::VulkanRenderPass, gfx::RenderPass> m_RenderPasses{ 8u, "RenderPasses" };
+        utils::Pool<gfx::VulkanRenderPassLayout, gfx::RenderPassLayout> m_RenderPassLayouts{ 8u, "RenderPassLayouts" };
 
     };
 }

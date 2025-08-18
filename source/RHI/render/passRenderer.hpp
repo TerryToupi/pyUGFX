@@ -16,7 +16,6 @@
 #include <handle.hpp>
 #include <span.hpp>
 #include <resources/renderPass.hpp>
-#include <resources/frameBuffer.hpp>
 #include <resources/Buffer.hpp>
 #include <resources/texture.hpp>
 #include <render/commands.hpp>
@@ -44,17 +43,6 @@ namespace gfx
          * @param drawCalls  Encoded draw command stream (from DrawStreamEncoder).
          */
         virtual void BeginRenderPass(
-            utils::Handle<RenderPass> renderPass,
-            utils::Span<uint32_t> drawCalls
-        ) = 0;
-
-        /**
-         * @brief Begins a surface pass for direct rendering to a surface or swapchain framebuffer.
-         *
-         * @param renderPass Handle to the RenderPass resource configured for the target surface.
-         * @param drawCalls  Encoded draw command stream (from DrawStreamEncoder).
-         */
-        virtual void BeginSurfacePass(
             utils::Handle<RenderPass> renderPass,
             utils::Span<uint32_t> drawCalls
         ) = 0;
