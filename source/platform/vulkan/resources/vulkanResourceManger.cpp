@@ -1,5 +1,18 @@
 /// \cond
 #include <resources/vulkanResourceManger.hpp>
+#include <vulkanGPUAllocator.hpp>
+
+void gfx::VulkanResourceManager::Init()
+{
+	gfx::VulkanGPUAllocator::instance = gfx::CreateShared<gfx::VulkanGPUAllocator>();
+	gfx::VulkanGPUAllocator::instance->Init();
+}
+
+void gfx::VulkanResourceManager::ShutDown()
+{
+	gfx::VulkanGPUAllocator::instance->ShutDown();
+	gfx::VulkanGPUAllocator::instance.reset();
+}
 
 utils::Handle<gfx::Shader> gfx::VulkanResourceManager::CreateShader(const gfx::ShaderDescriptor&& desc)
 {

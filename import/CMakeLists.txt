@@ -99,7 +99,7 @@ if(PYUGFX_ENABLE_VULKAN)
     target_link_libraries(${PROJECT_NAME}
         INTERFACE Vulkan-Headers 
         INTERFACE volk 
-        INTERFACE VulkanMemoryAllocator 
+        INTERFACE GPUOpen::VulkanMemoryAllocator
     )
 endif()
 

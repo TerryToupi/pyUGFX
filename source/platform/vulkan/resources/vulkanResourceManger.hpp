@@ -22,8 +22,8 @@ namespace gfx
     class VulkanResourceManager : public ResourceManager
     {
     public:
-        virtual void Init() override {};
-        virtual void ShutDown() override {};
+        virtual void Init() override;
+        virtual void ShutDown() override;
 
         virtual utils::Handle<gfx::Shader>               CreateShader(const gfx::ShaderDescriptor&& desc) override;
         virtual utils::Handle<gfx::BindGroup>            CreateBindGroup(const gfx::BindGroupDescriptor&& desc) override;
