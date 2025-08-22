@@ -3,7 +3,7 @@
 #ifndef __VULKAN_MEMORY_ALLOCATION__
 #define __VULKAN_MEMORY_ALLOCATION__
 
-#include <vma/vk_mem_alloc.h>
+#include <vk_mem_alloc.h>
 
 namespace gfx
 {
