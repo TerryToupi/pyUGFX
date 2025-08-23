@@ -452,6 +452,7 @@ namespace gfx
         EMPTY          = UINT_BIT_SHIFT(0), /**< Empty command buffer */
         CAPTURED       = UINT_BIT_SHIFT(1), /**< Command buffer has recorded commands */
         PENDING_UPLOAD = UINT_BIT_SHIFT(2), /**< Command buffer pending upload */
+        UPLOADED       = UINT_BIT_SHIFT(3), /**< Command buffer uploaded */
     };
 
     /**

@@ -4,6 +4,7 @@
 #define __VULKAN_PASS_RENDERER_HPP__
 
 #include <render/passRenderer.hpp>
+#include <vulkanEnums.hpp>
 #include <vulkanCommon.hpp>
 
 namespace gfx
@@ -29,6 +30,8 @@ namespace gfx
         VkSemaphore m_WaitSemaphore = VK_NULL_HANDLE;
         VkSemaphore m_SignalSemaphore = VK_NULL_HANDLE;
 		VkCommandBuffer m_CommandBuffer = VK_NULL_HANDLE;
+
+        gfx::CommandBufferState m_State = gfx::CommandBufferState::EMPTY;
 
 		friend class VulkanRenderer;
 	};

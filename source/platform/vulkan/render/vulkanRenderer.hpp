@@ -17,11 +17,25 @@ namespace gfx
 
         virtual CommandBuffer* BeginCommandRecording(gfx::CommandBufferType type) override;
 
+		void BeginFrame();
+		void EndFrame();
+
+		VkQueue GetGraphicsQueue();
+		VkQueue GetPresentQueue();
+
+		VkSemaphore GetImageAvailableSemaphore();
+		VkSemaphore GetMainBufferSemaphore();
+		VkSemaphore GetUIBufferSemaphore();
+
 	private: 
 		void CreateSyncStructures();
 		void CreateCommands();
 
 	private:
+		// queues
+		VkQueue m_GraphicsQueue;
+		VkQueue m_PresentQueue;
+
 		// fences
 		VkFence m_GraphicsFence;
 

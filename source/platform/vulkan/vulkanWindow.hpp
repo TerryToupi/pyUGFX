@@ -32,6 +32,8 @@ namespace gfx
         virtual void GetMousePos(double* x, double* y) override;
         
         void CreateSurface(VkInstance instance);
+        void GetNextSwapChainImage();
+        void Present();
         
         GLFWwindow* GetWindow();
         VkSurfaceKHR GetSurface();
@@ -50,6 +52,7 @@ namespace gfx
         std::vector<VkImageView> m_SwapchainImageViews;
         VkFormat m_SwapchainImageFormat;
         VkExtent2D m_SwapchainExtent;
+        uint32_t m_SwapchainIndex;
     };
 }
 

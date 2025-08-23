@@ -6,16 +6,23 @@
 #include <device.hpp>
 #include <window.hpp>
 
+#include <window.hpp>
+#include <device.hpp>
+#include <resources/resourceManger.hpp>
+#include <render/renderer.hpp>
+
 #if PYUGFX_ENABLE_VULKAN
 #include <vulkanDevice.hpp>
 #include <vulkanWindow.hpp>
 #include <resources/vulkanResourceManger.hpp>
+#include <render/vulkanRenderer.hpp>
 
 static void VulkanInit()
 {
     gfx::Window::instance = gfx::CreateShared<gfx::VulkanWindow>();
     gfx::Device::instance = gfx::CreateShared<gfx::VulkanDevice>();
     gfx::ResourceManager::instance = gfx::CreateShared<gfx::VulkanResourceManager>();
+    gfx::Renderer::instance = gfx::CreateShared<gfx::VulkanRenderer>();
 
     gfx::Window::instance->Init({
         .name = "Heavy",
@@ -24,6 +31,7 @@ static void VulkanInit()
     });
     gfx::Device::instance->Init();
     gfx::ResourceManager::instance->Init();
+    gfx::VulkanRenderer::instance->Init();
 }
 #endif
 
@@ -50,10 +58,16 @@ static void MetalInit()
 
 void setup::ContextShutDown()
 {
-    gfx::ResourceManager::instance->ShutDown();
-    gfx::Window::instance->ShutDown();
-	gfx::Device::instance->ShutDown();
+    if (gfx::Renderer::instance.get() != nullptr)
+        gfx::Renderer::instance->ShutDown();
+    if (gfx::ResourceManager::instance.get() != nullptr)
+		gfx::ResourceManager::instance->ShutDown();
+    if (gfx::Window::instance.get() != nullptr)
+		gfx::Window::instance->ShutDown();
+    if (gfx::Device::instance.get() != nullptr)
+		gfx::Device::instance->ShutDown();
 
+    gfx::Renderer::instance.reset();
     gfx::ResourceManager::instance.reset();
     gfx::Window::instance.reset();
 	gfx::Device::instance.reset();

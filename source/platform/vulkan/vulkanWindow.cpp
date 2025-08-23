@@ -2,6 +2,7 @@
 
 #include <vulkanWindow.hpp>
 #include <vulkanDevice.hpp>
+#include <render/vulkanRenderer.hpp>
 
 void gfx::VulkanWindow::Init(const WindowDescriptor&& desc)
 {
@@ -34,10 +35,20 @@ void gfx::VulkanWindow::ShutDown()
 
 void gfx::VulkanWindow::Run(const GameLoop& func)
 {
+    gfx::VulkanRenderer* renderer = static_cast<gfx::VulkanRenderer*>(gfx::Renderer::instance.get());
+
     while (glfwWindowShouldClose(m_Window) != GLFW_TRUE)
     {
         glfwPollEvents();
-        func();
+
+        renderer->BeginFrame();
+        {
+			GetNextSwapChainImage();
+			func();
+        }
+        renderer->EndFrame();
+
+        Present();
     }
 }
 
@@ -69,6 +80,33 @@ void gfx::VulkanWindow::GetMousePos(double* x, double* y)
 void gfx::VulkanWindow::CreateSurface(VkInstance instance)
 {
     VK_CHECK(glfwCreateWindowSurface(instance, m_Window, nullptr, &m_Surface), "Failed To create Vulkan Surface!");
+}
+
+void gfx::VulkanWindow::GetNextSwapChainImage()
+{
+    gfx::VulkanDevice* device = static_cast<VulkanDevice*>(gfx::Device::instance.get());
+    gfx::VulkanRenderer* renderer = static_cast<VulkanRenderer*>(gfx::Renderer::instance.get());
+
+    VK_CHECK(vkAcquireNextImageKHR(device->GetDevice(), m_Swapchain, 1000000000, renderer->GetImageAvailableSemaphore(), nullptr, &m_SwapchainIndex), "vkAcquireNextImageKHR");
+}
+
+void gfx::VulkanWindow::Present()
+{
+    gfx::VulkanDevice* device = static_cast<VulkanDevice*>(gfx::Device::instance.get());
+    gfx::VulkanRenderer* renderer = static_cast<VulkanRenderer*>(gfx::Renderer::instance.get());
+
+    VkSemaphore imageAvailable = renderer->GetImageAvailableSemaphore();
+    VkPresentInfoKHR presentInfo =
+    {
+        .sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR,
+        .pNext = nullptr,
+        .waitSemaphoreCount = 1,
+        .pWaitSemaphores = &imageAvailable,
+        .swapchainCount = 1,
+        .pSwapchains = &m_Swapchain,
+        .pImageIndices = &m_SwapchainIndex,
+    };
+    VK_CHECK(vkQueuePresentKHR(renderer->GetPresentQueue(), &presentInfo));
 }
 
 void gfx::VulkanWindow::CreateSwapChain()
