@@ -104,8 +104,18 @@ namespace gfx
          */
         struct ColorTarget
         {
-            bool isSwapChain = false;
             utils::Handle<Texture> target;
+            LoadOperation loadOp = LoadOperation::CLEAR;
+            StoreOperation storeOp = StoreOperation::STORE;
+            double clearColor[4] = {0.2, 0.2, 0.2, 1};
+        }; 
+
+        /**
+         * @brief Represents swapchain attachment.
+         */
+        struct SwapChainTarget 
+        {
+            bool enabled = false;
             LoadOperation loadOp = LoadOperation::CLEAR;
             StoreOperation storeOp = StoreOperation::STORE;
             double clearColor[4] = {0.2, 0.2, 0.2, 1};
@@ -127,6 +137,7 @@ namespace gfx
         };
 
         DepthTarget depthTarget;
+        SwapChainTarget swapTarget;
         utils::Span<ColorTarget> colorTargets;
     };
 

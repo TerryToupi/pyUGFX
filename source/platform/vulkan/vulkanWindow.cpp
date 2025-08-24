@@ -57,9 +57,9 @@ gfx::TextureFormat gfx::VulkanWindow::GetSurfaceFormat()
     return gfx::TextureFormat::UNDEFINED;
 }
 
-void gfx::VulkanWindow::GetWindowSize(int* width, int* heigh)
+void gfx::VulkanWindow::GetWindowSize(int* width, int* height)
 {
-    
+    glfwGetFramebufferSize(m_Window, width, height);
 }
 
 bool gfx::VulkanWindow::GetKey(input::Key key)

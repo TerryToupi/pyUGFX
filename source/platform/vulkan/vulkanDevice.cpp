@@ -232,10 +232,16 @@ void gfx::VulkanDevice::CreateLogicalDevice()
     VkPhysicalDeviceDynamicRenderingFeaturesKHR dynRender{};
     dynRender.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DYNAMIC_RENDERING_FEATURES_KHR;
     dynRender.dynamicRendering = VK_TRUE;
+    dynRender.pNext = nullptr;
+
+    VkPhysicalDeviceSynchronization2Features sync2Features{};
+    sync2Features.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SYNCHRONIZATION_2_FEATURES;
+    sync2Features.synchronization2 = VK_TRUE;
+    sync2Features.pNext = &dynRender;
 
     VkDeviceCreateInfo createInfo = {};
     createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
-    createInfo.pNext = &dynRender;
+    createInfo.pNext = &sync2Features;
     createInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());
     createInfo.pQueueCreateInfos = queueCreateInfos.data();
     createInfo.pEnabledFeatures = &deviceFeatures;
@@ -432,13 +438,19 @@ bool gfx::VulkanDevice::IsDeviceSuitable(VkPhysicalDevice device)
     // Check for dynamic rendering
     VkPhysicalDeviceDynamicRenderingFeaturesKHR dynRenderFeatures{};
     dynRenderFeatures.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DYNAMIC_RENDERING_FEATURES_KHR;
+    dynRenderFeatures.pNext = nullptr;
+
+    VkPhysicalDeviceSynchronization2Features sync2Features{};
+    sync2Features.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SYNCHRONIZATION_2_FEATURES;
+    sync2Features.pNext = &dynRenderFeatures;
 
     VkPhysicalDeviceFeatures2 deviceFeatures2{};
     deviceFeatures2.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2;
-    deviceFeatures2.pNext = &dynRenderFeatures;
+    deviceFeatures2.pNext = &sync2Features;
 
     vkGetPhysicalDeviceFeatures2(device, &deviceFeatures2);
     bool dynamicRenderingSupported = dynRenderFeatures.dynamicRendering;
+    bool sync2FeaturesSupported = sync2Features.synchronization2;
 
     // Check device extension support
     uint32_t extensionCount;
@@ -462,7 +474,7 @@ bool gfx::VulkanDevice::IsDeviceSuitable(VkPhysicalDevice device)
         swapChainAdequate = !swapChainSupport.Formats.empty() && !swapChainSupport.PresentModes.empty();
     }
 
-    return indices.isComplete() && dynamicRenderingSupported && extensionsSupported && swapChainAdequate;
+    return indices.isComplete() && dynamicRenderingSupported && sync2FeaturesSupported && extensionsSupported && swapChainAdequate;
 }
 
 VkInstance gfx::VulkanDevice::GetInstance()

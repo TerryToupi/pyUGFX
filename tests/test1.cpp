@@ -10,12 +10,9 @@ void run()
     uint32_t buf[1024];
     gfx::CommandBuffer* buffer = gfx::Renderer::instance->BeginCommandRecording(gfx::CommandBufferType::MAIN);
     buffer->BeginRenderPass({
-        .depthTarget = {
-            .enabled = false
-        },
-        .colorTargets = {
-            {.isSwapChain = true}
-        },
+        .swapTarget = {
+            .enabled = true
+        }
     }, utils::Span<uint32_t>(buf));
     buffer->Submit();
     return;

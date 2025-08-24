@@ -25,7 +25,7 @@ namespace gfx
         
         virtual gfx::TextureFormat GetSurfaceFormat() override;
         
-        virtual void GetWindowSize(int* width, int* heigh) override;
+        virtual void GetWindowSize(int* width, int* height) override;
         
         virtual bool GetKey(input::Key key) override;
         virtual bool GetMouseButton(input::Button button) override;

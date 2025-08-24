@@ -25,6 +25,20 @@ namespace gfx
 
         virtual void Submit() override;
 
+		void TransitionImage(
+			VkImage image,
+			VkImageLayout oldLayout,
+			VkImageLayout newLayout,
+			VkPipelineStageFlags2 srcStage,
+			VkPipelineStageFlags2 dstStage,
+			VkAccessFlags2 srcAccess,
+			VkAccessFlags2 dstAccess
+		);
+
+		void TransitionToRenderTarget(VkImage image);
+		void TransitionToShaderRead(VkImage image);
+		void TransitionToPresent(VkImage image);
+
 	private:
         VkFence m_Fence = VK_NULL_HANDLE;
         VkSemaphore m_WaitSemaphore = VK_NULL_HANDLE;
