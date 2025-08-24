@@ -37,6 +37,9 @@ namespace gfx
         
         GLFWwindow* GetWindow();
         VkSurfaceKHR GetSurface();
+
+        VkImage GetCurrentSwapChainImage();
+        VkImageView GetCurrentSwapChainImageView();
    
     private:
         VkSurfaceFormatKHR ChooseSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& formats);

@@ -95,13 +95,13 @@ void gfx::VulkanWindow::Present()
     gfx::VulkanDevice* device = static_cast<VulkanDevice*>(gfx::Device::instance.get());
     gfx::VulkanRenderer* renderer = static_cast<VulkanRenderer*>(gfx::Renderer::instance.get());
 
-    VkSemaphore imageAvailable = renderer->GetImageAvailableSemaphore();
+    VkSemaphore semaphore = renderer->GetUIBufferSemaphore();
     VkPresentInfoKHR presentInfo =
     {
         .sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR,
         .pNext = nullptr,
         .waitSemaphoreCount = 1,
-        .pWaitSemaphores = &imageAvailable,
+        .pWaitSemaphores = &semaphore,
         .swapchainCount = 1,
         .pSwapchains = &m_Swapchain,
         .pImageIndices = &m_SwapchainIndex,
@@ -281,6 +281,16 @@ GLFWwindow* gfx::VulkanWindow::GetWindow()
 VkSurfaceKHR gfx::VulkanWindow::GetSurface()
 {
     return m_Surface;
+}
+
+VkImage gfx::VulkanWindow::GetCurrentSwapChainImage()
+{
+    return m_SwapchainImages[m_SwapchainIndex];
+}
+
+VkImageView gfx::VulkanWindow::GetCurrentSwapChainImageView()
+{
+    return m_SwapchainImageViews[m_SwapchainIndex];
 }
 
 /// \endcond

@@ -29,6 +29,14 @@ void gfx::VulkanRenderer::ShutDown()
 
 gfx::CommandBuffer* gfx::VulkanRenderer::BeginCommandRecording(gfx::CommandBufferType type)
 {
+	VkCommandBufferBeginInfo cmdBeginInfo =
+	{
+		.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO,
+		.pNext = nullptr,
+		.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT,
+		.pInheritanceInfo = nullptr,
+	};
+
 	switch (type)
 	{
 	case gfx::CommandBufferType::OFFSCREEN:
@@ -37,6 +45,8 @@ gfx::CommandBuffer* gfx::VulkanRenderer::BeginCommandRecording(gfx::CommandBuffe
 		if (m_MainBuffer.m_State == gfx::CommandBufferState::EMPTY)
 		{
 			m_MainBuffer.m_State = gfx::CommandBufferState::CAPTURED;
+			VK_CHECK(vkResetCommandBuffer(m_MainBuffer.m_CommandBuffer, 0), "vkResetCommandBuffer");
+			VK_CHECK(vkBeginCommandBuffer(m_MainBuffer.m_CommandBuffer, &cmdBeginInfo), "vkBeginCommandBuffer");
 			return static_cast<gfx::CommandBuffer*>(&m_MainBuffer);
 		}
 		break;
@@ -46,11 +56,19 @@ gfx::CommandBuffer* gfx::VulkanRenderer::BeginCommandRecording(gfx::CommandBuffe
 		if (m_UIBuffer.m_State == gfx::CommandBufferState::EMPTY)
 		{
 			m_UIBuffer.m_State = gfx::CommandBufferState::CAPTURED;
+			VK_CHECK(vkResetCommandBuffer(m_UIBuffer.m_CommandBuffer, 0), "vkResetCommandBuffer");
+			VK_CHECK(vkBeginCommandBuffer(m_UIBuffer.m_CommandBuffer, &cmdBeginInfo), "vkBeginCommandBuffer");
 			return static_cast<gfx::CommandBuffer*>(&m_UIBuffer);
 		}
 		break;
 	default:
-		 
+		if (m_MainBuffer.m_State == gfx::CommandBufferState::EMPTY)
+		{
+			m_MainBuffer.m_State = gfx::CommandBufferState::CAPTURED;
+			VK_CHECK(vkResetCommandBuffer(m_MainBuffer.m_CommandBuffer, 0), "vkResetCommandBuffer");
+			VK_CHECK(vkBeginCommandBuffer(m_MainBuffer.m_CommandBuffer, &cmdBeginInfo), "vkBeginCommandBuffer");
+			return static_cast<gfx::CommandBuffer*>(&m_MainBuffer);
+		}
 		break;
 	}
 }
@@ -66,9 +84,15 @@ void gfx::VulkanRenderer::BeginFrame()
 void gfx::VulkanRenderer::EndFrame()
 {
 	if (m_MainBuffer.m_State == gfx::CommandBufferState::EMPTY)
-		m_MainBuffer.Submit();
+	{
+		gfx::CommandBuffer* buffer = BeginCommandRecording(gfx::CommandBufferType::MAIN);
+		buffer->Submit();
+	}
 	if (m_UIBuffer.m_State == gfx::CommandBufferState::EMPTY)
-		m_UIBuffer.Submit();
+	{
+		gfx::CommandBuffer* buffer = BeginCommandRecording(gfx::CommandBufferType::UI);
+		buffer->Submit();
+	}
 
 	m_MainBuffer.m_State = gfx::CommandBufferState::EMPTY;
 	m_UIBuffer.m_State = gfx::CommandBufferState::EMPTY;
@@ -151,14 +175,14 @@ void gfx::VulkanRenderer::CreateCommands()
 	VK_CHECK(vkAllocateCommandBuffers(device->GetDevice(), &cmdAllocInfo, commandBuffers), "vkAllocateCommandBuffers");
 
 	m_MainBuffer.m_CommandBuffer = commandBuffers[0];
-	m_MainBuffer.m_Fence = m_GraphicsFence;
+	m_MainBuffer.m_Fence = VK_NULL_HANDLE;
 	m_MainBuffer.m_WaitSemaphore = m_ImageAvailableSemaphore;
 	m_MainBuffer.m_SignalSemaphore = m_MainBufferSemaphore;
 
 	m_UIBuffer.m_CommandBuffer = commandBuffers[1];
 	m_UIBuffer.m_Fence = m_GraphicsFence;
 	m_UIBuffer.m_WaitSemaphore = m_MainBufferSemaphore;
-	m_UIBuffer.m_SignalSemaphore = m_ImageAvailableSemaphore;
+	m_UIBuffer.m_SignalSemaphore = m_UIBufferSemaphore;
 }
 
 /// \endcond
