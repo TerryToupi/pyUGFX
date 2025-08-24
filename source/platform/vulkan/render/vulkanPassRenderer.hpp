@@ -13,7 +13,7 @@ namespace gfx
 	{
 	public:
         virtual void BeginRenderPass(
-            utils::Handle<RenderPass> renderPass,
+            const RenderPassCommand&& cmd,
             utils::Span<uint32_t> drawCalls
         ) override;
 

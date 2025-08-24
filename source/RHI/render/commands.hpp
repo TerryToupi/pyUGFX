@@ -95,6 +95,42 @@ namespace gfx
     };
 
     /**
+	 * @brief Represents a render pass command that's specifying the color targets and the depth target of the pass.
+	 */
+    struct RenderPassCommand
+    {
+        /**
+         * @brief Represents a single color target attachment.
+         */
+        struct ColorTarget
+        {
+            bool isSwapChain = false;
+            utils::Handle<Texture> target;
+            LoadOperation loadOp = LoadOperation::CLEAR;
+            StoreOperation storeOp = StoreOperation::STORE;
+            double clearColor[4] = {0.2, 0.2, 0.2, 1};
+        };
+
+        /**
+         * @brief Represents a depth/stencil target attachment.
+         */
+        struct DepthTarget
+        {
+            bool enabled = false;
+            utils::Handle<Texture> target;
+            LoadOperation loadOp = LoadOperation::CLEAR;
+            StoreOperation storeOp = StoreOperation::STORE;
+            LoadOperation stencilLoadOp = LoadOperation::CLEAR;
+            StoreOperation stencilStoreOp = StoreOperation::STORE;
+            float clearZ = 0.0f;
+            uint32_t clearStencil = 0;
+        };
+
+        DepthTarget depthTarget;
+        utils::Span<ColorTarget> colorTargets;
+    };
+
+    /**
      * @brief Encodes draw commands into a compact uint32_t stream.
      *
      * This encoder tracks state changes between draws to minimize redundant data in the stream.
