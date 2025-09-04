@@ -10,18 +10,29 @@ option(PYUGFX_ENABLE_TESTS "Enabling testing" ON)
 option(PYUGFX_ENABLE_VULKAN "Enabling Vulkan platform API" OFF)
 option(PYUGFX_ENABLE_METAL "Enabling Metal platform API" OFF)
 
+option(PYUGFX_ENABLE_VULKAN_ONLY "Enabling only the Vulkan API" OFF)
+option(PYUGFX_ENABLE_METAL_ONLY "Enabling only the METAL API" OFF)
+
 if(WIN32)
     message(STATUS "Windows detected")
-    if(NOT PYUGFX_ENABLE_VULKAN)
+    if(NOT PYUGFX_ENABLE_VULKAN AND NOT PYUGFX_ENABLE_METAL_ONLY)
         message(STATUS "Enabling Vulkan API!")
         set(PYUGFX_ENABLE_VULKAN ON CACHE BOOL "Enabling Vulkan platform API" FORCE)
     endif()
 elseif(APPLE)
     message(STATUS "macOS detected")
-    if(NOT PYUGFX_ENABLE_METAL)
+    if(NOT PYUGFX_ENABLE_METAL AND NOT PYUGFX_ENABLE_VULKAN_ONLY)
         message(STATUS "Enabling Metal API!")
         set(PYUGFX_ENABLE_METAL ON CACHE BOOL "Enabling Metal platform API" FORCE)
     endif()
+endif()
+
+if(PYUGFX_ENABLE_VULKAN_ONLY)
+    set(PYUGFX_ENABLE_VULKAN ON CACHE BOOL "Enabling Vulkan platform API" FORCE)
+endif()
+
+if(PYUGFX_ENABLE_METAL_ONLY)
+    set(PYUGFX_ENABLE_METAL ON CACHE BOOL "Enabling Metal platform API" FORCE)
 endif()
 
 # configuring enviroments
