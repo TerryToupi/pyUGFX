@@ -79,25 +79,26 @@ target_link_libraries(${PROJECT_NAME}
 
 if(PYUGFX_ENABLE_VULKAN)
     CPMAddPackage(
-        NAME Vulkan-Headers
-        GIT_REPOSITORY https://github.com/KhronosGroup/Vulkan-Headers.git
-        GIT_TAG vulkan-sdk-1.4.321.0
-    )
-
-    CPMAddPackage(
-        NAME volk
-        GIT_REPOSITORY https://github.com/zeux/volk.git
-        GIT_TAG vulkan-sdk-1.4.321.0 
-    )
-
-    CPMAddPackage(
         NAME VulkanMemoryAllocator
         GIT_REPOSITORY https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator.git
         GIT_TAG v3.3.0 
     )
 
+    CPMAddPackage(
+        NAME Vulkan-Headers
+        GIT_REPOSITORY https://github.com/KhronosGroup/Vulkan-Headers.git
+        GIT_TAG master 
+    )
+
+    CPMAddPackage(
+        NAME volk
+        GIT_REPOSITORY https://github.com/zeux/volk.git
+        GIT_TAG master 
+        OPTIONS
+            "VULKAN_HEADERS_INSTALL_DIR ${Vulkan-Headers_SOURCE_DIR}"
+    )
+
     target_link_libraries(${PROJECT_NAME}
-        INTERFACE Vulkan-Headers 
         INTERFACE volk 
         INTERFACE GPUOpen::VulkanMemoryAllocator
     )
