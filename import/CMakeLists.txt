@@ -18,19 +18,13 @@ endif()
 CPMAddPackage(
     NAME glfw
     GIT_REPOSITORY https://github.com/glfw/glfw.git
-    GIT_TAG 3.4
+    GIT_TAG master 
 )
 
 CPMAddPackage(
     NAME pybind11
     GIT_REPOSITORY https://github.com/pybind/pybind11.git
-    GIT_TAG v3.0.0
-)
-
-CPMAddPackage(
-    NAME spdlog
-    GIT_REPOSITORY https://github.com/gabime/spdlog.git
-    GIT_TAG v1.15.3
+    GIT_TAG master 
 )
 
 CPMAddPackage(
@@ -50,7 +44,7 @@ CPMAddPackage(
 CPMAddPackage(
     NAME glslang
     GIT_REPOSITORY https://github.com/KhronosGroup/glslang.git
-    GIT_TAG main
+    GIT_TAG main 
 )
 
 set(SHADERC_SKIP_TESTS ON CACHE BOOL "Skip shaderc tests" FORCE)
@@ -58,7 +52,7 @@ set(SHADERC_SKIP_EXAMPLES ON CACHE BOOL "Skip shaderc examples" FORCE)
 CPMAddPackage(
     NAME shaderc
     GITHUB_REPOSITORY google/shaderc
-    GIT_TAG main
+    GIT_TAG main 
 )
 
 # Connecting dependencies
@@ -66,7 +60,6 @@ target_link_libraries(${PROJECT_NAME}
     INTERFACE glfw
     INTERFACE pybind11::pybind11
     INTERFACE shaderc
-    INTERFACE spdlog::spdlog
 )
 
 #####################################
@@ -81,13 +74,13 @@ if(PYUGFX_ENABLE_VULKAN)
     CPMAddPackage(
         NAME VulkanMemoryAllocator
         GIT_REPOSITORY https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator.git
-        GIT_TAG v3.3.0 
+        GIT_TAG master 
     )
 
     CPMAddPackage(
         NAME Vulkan-Headers
         GIT_REPOSITORY https://github.com/KhronosGroup/Vulkan-Headers.git
-        GIT_TAG master 
+        GIT_TAG main 
     )
 
     CPMAddPackage(
@@ -112,7 +105,7 @@ if(PYUGFX_ENABLE_METAL)
     CPMAddPackage(
         Name Metal-Headers
         GIT_REPOSITORY https://github.com/TerryToupi/Metal-Headers.git
-        GIT_TAG main
+        GIT_TAG main 
     )
 
     target_link_libraries(${PROJECT_NAME} 
@@ -125,7 +118,6 @@ if(PYUGFX_ENABLE_METAL)
     find_library(APPKIT AppKit)
 
     target_link_libraries(${PROJECT_NAME}
-        INTERFACE stdc++
         INTERFACE "-framework Metal"
         INTERFACE "-framework Foundation"
         INTERFACE "-framework QuartzCore"
