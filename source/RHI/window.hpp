@@ -30,6 +30,7 @@ namespace gfx
         std::string name;   /**< The title of the window. */
         uint16_t width;     /**< The width of the window in pixels. */
         uint16_t height;    /**< The height of the window in pixels. */
+        bool vSync = false;
     };
 
     /**
@@ -66,21 +67,6 @@ namespace gfx
         virtual void Run(const GameLoop& func) = 0;
 
         /**
-         * @brief Creates the swap chain for rendering.
-         */
-        virtual void CreateSwapChain() = 0;
-
-        /**
-         * @brief Cleans up the swap chain resources.
-         */
-        virtual void CleanUpSwapChain() = 0;
-
-        /**
-         * @brief Recreates the swap chain, usually after a resize.
-         */
-        virtual void ReCreateSwapChain() = 0;
-
-        /**
          * @brief Gets the pixel format of the rendering surface.
          * @return The surface's texture format.
          */
@@ -92,6 +78,11 @@ namespace gfx
          * @param height Pointer to an int to store the height.
          */
         virtual void GetWindowSize(int* width, int* height) = 0;
+
+        /**
+         * @brief Returns the current vsync status.
+         */
+        virtual bool GetWindowVSync() = 0;
 
         /**
          * @brief Checks if a specific key is currently pressed.

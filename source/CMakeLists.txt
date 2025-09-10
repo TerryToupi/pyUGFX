@@ -5,41 +5,41 @@ project(pyUGFX_library)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # publicly included headers
-file(GLOB_RECURSE CONTEXT_HEADERS CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/context/**.hpp")
+file(GLOB_RECURSE CORE_HEADERS CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/core/**.hpp")
 file(GLOB_RECURSE RHI_HEADERS CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/RHI/**.hpp")
 file(GLOB_RECURSE UTILS_HEADERS CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/utils/**.hpp")
 
 # platform spacific files
-file(GLOB_RECURSE CONTEXT_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/platform/context/**.hpp" "${CMAKE_CURRENT_SOURCE_DIR}/platform/context/**.cpp")
-file(GLOB_RECURSE METAL_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/platform/metal/**.hpp" "${CMAKE_CURRENT_SOURCE_DIR}/platform/metal/**.cpp")
-file(GLOB_RECURSE METAL_OBJC_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/platform/metal/**.mm")
-file(GLOB_RECURSE VULKAN_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/platform/vulkan/**.hpp" "${CMAKE_CURRENT_SOURCE_DIR}/platform/vulkan/**.cpp")
+file(GLOB_RECURSE CORE_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/backend/core/**.hpp" "${CMAKE_CURRENT_SOURCE_DIR}/backend/core/**.cpp")
+file(GLOB_RECURSE METAL_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/backend/metal/**.hpp" "${CMAKE_CURRENT_SOURCE_DIR}/backend/metal/**.cpp")
+file(GLOB_RECURSE METAL_OBJC_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/backend/metal/**.mm")
+file(GLOB_RECURSE VULKAN_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/backend/vulkan/**.hpp" "${CMAKE_CURRENT_SOURCE_DIR}/backend/vulkan/**.cpp")
 
 add_library(pyUGFX_library STATIC)
 add_library(pyUGFX::library ALIAS pyUGFX_library)
 
 target_sources(pyUGFX_library
-    PRIVATE ${CONTEXT_HEADERS}
+    PRIVATE ${CORE_HEADERS}
     PRIVATE ${RHI_HEADERS}
     PRIVATE ${UTILS_HEADERS}
 )
 target_include_directories(pyUGFX_library
     PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/RHI/"
     PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/utils/"
-    PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/context/"
+    PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/core/"
 )
-group_sources_by_folder_from_list(CONTEXT_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}")
+group_sources_by_folder_from_list(CORE_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}")
 group_sources_by_folder_from_list(RHI_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}")
 group_sources_by_folder_from_list(UTILS_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}")
 
 # including Context source files
 target_sources(pyUGFX_library
-    PRIVATE ${CONTEXT_FILES}
+    PRIVATE ${CORE_FILES}
 )
 target_include_directories(pyUGFX_library
-    PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/platform/context/"
+    PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/backend/core/"
 )
-group_sources_by_folder_from_list(CONTEXT_FILES "${CMAKE_CURRENT_SOURCE_DIR}")
+group_sources_by_folder_from_list(CORE_FILES "${CMAKE_CURRENT_SOURCE_DIR}")
 
 # vulkan specific platform files
 if(PYUGFX_ENABLE_VULKAN)
@@ -47,7 +47,7 @@ if(PYUGFX_ENABLE_VULKAN)
         PRIVATE ${VULKAN_FILES}
     )
     target_include_directories(pyUGFX_library
-        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/platform/vulkan/"
+        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/backend/vulkan/"
     )
     group_sources_by_folder_from_list(VULKAN_FILES "${CMAKE_CURRENT_SOURCE_DIR}")
 endif()
@@ -62,7 +62,7 @@ if(PYUGFX_ENABLE_METAL)
     #     PROPERTIES LANGUAGE OBJCXX
     # )
     target_include_directories(pyUGFX_library
-        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/platform/metal/"
+        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/backend/metal/"
     )
     group_sources_by_folder_from_list(METAL_FILES "${CMAKE_CURRENT_SOURCE_DIR}")
     group_sources_by_folder_from_list(METAL_OBJC_FILES "${CMAKE_CURRENT_SOURCE_DIR}")

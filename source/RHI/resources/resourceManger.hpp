@@ -19,11 +19,9 @@
 #include <resources/buffer.hpp>
 #include <resources/dynamicBuffers.hpp>
 #include <resources/dynamicBuffersLayout.hpp>
-#include <resources/renderPass.hpp>
 #include <resources/sampler.hpp>
 #include <resources/shader.hpp>
 #include <resources/texture.hpp>
-#include <resources/renderPassLayout.hpp>
 
 #include <handle.hpp>
 
@@ -62,8 +60,6 @@ namespace gfx
         virtual utils::Handle<Buffer> CreateBuffer(const gfx::BufferDescriptor&& desc) = 0;
         virtual utils::Handle<DynamicBuffers> CreateDynamicBuffers(const gfx::DynamicBuffersDescriptor&& desc) = 0;
         virtual utils::Handle<DynamicBuffersLayout> CreateDynamicBuffersLayout(const gfx::DynamicBuffersLayoutDescriptor&& desc) = 0;
-        virtual utils::Handle<RenderPass> CreateRenderPass(const gfx::RenderPassDescriptor&& desc) = 0;
-        virtual utils::Handle<RenderPassLayout> CreateRenderPassLayout(const gfx::RenderPassLayoutDescriptor&& desc) = 0;
 
         /**
          * @brief Remove a GPU resource.
@@ -77,17 +73,6 @@ namespace gfx
         virtual void Remove(utils::Handle<Buffer> handle) = 0;
         virtual void Remove(utils::Handle<DynamicBuffers> handle) = 0;
         virtual void Remove(utils::Handle<DynamicBuffersLayout> handle) = 0;
-        virtual void Remove(utils::Handle<RenderPass> handle) = 0;
-        virtual void Remove(utils::Handle<RenderPassLayout> handle) = 0;
-
-        /**
-         * @brief Update the contents of a buffer.
-         * @param buffer Handle to the buffer.
-         * @param offset Byte offset to start writing.
-         * @param data Pointer to the data to copy.
-         * @param size Size of the data in bytes.
-         */
-        virtual void SetBufferData(utils::Handle<Buffer> buffer, uint32_t offset, const void* data, uint32_t size) = 0;
     };
 }
 

@@ -1,17 +1,12 @@
 /// \cond
 #include <resources/vulkanResourceManger.hpp>
-#include <vulkanGPUAllocator.hpp>
 
 void gfx::VulkanResourceManager::Init()
 {
-	gfx::VulkanGPUAllocator::instance = gfx::CreateShared<gfx::VulkanGPUAllocator>();
-	gfx::VulkanGPUAllocator::instance->Init();
 }
 
 void gfx::VulkanResourceManager::ShutDown()
 {
-	gfx::VulkanGPUAllocator::instance->ShutDown();
-	gfx::VulkanGPUAllocator::instance.reset();
 }
 
 utils::Handle<gfx::Shader> gfx::VulkanResourceManager::CreateShader(const gfx::ShaderDescriptor&& desc)
@@ -45,14 +40,6 @@ utils::Handle<gfx::DynamicBuffers> gfx::VulkanResourceManager::CreateDynamicBuff
 utils::Handle<gfx::DynamicBuffersLayout> gfx::VulkanResourceManager::CreateDynamicBuffersLayout(const gfx::DynamicBuffersLayoutDescriptor&& desc)
 {
 	return m_DynamicBuffersLayout.Insert(VulkanDynamicBuffersLayout(std::forward<const gfx::DynamicBuffersLayoutDescriptor>(desc)));
-}
-utils::Handle<gfx::RenderPass> gfx::VulkanResourceManager::CreateRenderPass(const gfx::RenderPassDescriptor&& desc)
-{
-	return m_RenderPasses.Insert(VulkanRenderPass(std::forward<const gfx::RenderPassDescriptor>(desc)));
-}
-utils::Handle<gfx::RenderPassLayout> gfx::VulkanResourceManager::CreateRenderPassLayout(const gfx::RenderPassLayoutDescriptor&& desc)
-{
-	return m_RenderPassLayouts.Insert(VulkanRenderPassLayout(std::forward<const gfx::RenderPassLayoutDescriptor>(desc)));
 }
 
 void gfx::VulkanResourceManager::Remove(utils::Handle<gfx::Shader> handle)
@@ -127,28 +114,6 @@ void gfx::VulkanResourceManager::Remove(utils::Handle<gfx::DynamicBuffersLayout>
 	dynamic->Remove();
 	m_DynamicBuffersLayout.Remove(handle);
 }
-void gfx::VulkanResourceManager::Remove(utils::Handle<gfx::RenderPass> handle)
-{
-	VulkanRenderPass* renderPass = m_RenderPasses.Get(handle);
-	if (!renderPass)
-		return;
-
-	renderPass->Remove();
-	m_RenderPasses.Remove(handle);
-}
-void gfx::VulkanResourceManager::Remove(utils::Handle<gfx::RenderPassLayout> handle)
-{
-	VulkanRenderPassLayout* renderLayout = m_RenderPassLayouts.Get(handle);
-	if (!renderLayout)
-		return;
-
-	renderLayout->Remove();
-	m_RenderPassLayouts.Remove(handle);
-}
-
-void gfx::VulkanResourceManager::SetBufferData(utils::Handle<Buffer> buffer, uint32_t offset, const void* data, uint32_t size)
-{
-}
 
 utils::Handle<gfx::Shader> gfx::VulkanResourceManager::Add(const gfx::VulkanShader& shader)
 {
@@ -182,15 +147,6 @@ utils::Handle<gfx::DynamicBuffersLayout> gfx::VulkanResourceManager::Add(const g
 {
 	return m_DynamicBuffersLayout.Insert(buffer);
 }
-utils::Handle<gfx::RenderPass> gfx::VulkanResourceManager::Add(const gfx::VulkanRenderPass& renderPass)
-{
-	return m_RenderPasses.Insert(renderPass);
-}
-utils::Handle<gfx::RenderPassLayout> gfx::VulkanResourceManager::Add(const gfx::VulkanRenderPassLayout& renderPassLayout)
-{
-	return m_RenderPassLayouts.Insert(renderPassLayout);
-}
-
 
 gfx::VulkanShader* gfx::VulkanResourceManager::Get(utils::Handle<gfx::Shader> handle)
 {
@@ -223,14 +179,6 @@ gfx::VulkanDynamicBuffers* gfx::VulkanResourceManager::Get(utils::Handle<gfx::Dy
 gfx::VulkanDynamicBuffersLayout* gfx::VulkanResourceManager::Get(utils::Handle<gfx::DynamicBuffersLayout> handle)
 {
 	return m_DynamicBuffersLayout.Get(handle);
-}
-gfx::VulkanRenderPass* gfx::VulkanResourceManager::Get(utils::Handle<gfx::RenderPass> handle)
-{
-	return m_RenderPasses.Get(handle);
-}
-gfx::VulkanRenderPassLayout* gfx::VulkanResourceManager::Get(utils::Handle<gfx::RenderPassLayout> handle)
-{
-	return m_RenderPassLayouts.Get(handle);
 }
 /// \endcond
 

@@ -18,7 +18,6 @@
 #include <handle.hpp>
 #include <enums.hpp>
 #include <resources/bindGroupLayout.hpp>
-#include <resources/renderPassLayout.hpp>
 
 namespace gfx
 {
@@ -81,7 +80,6 @@ namespace gfx
             gfx::Compare depthTest = gfx::Compare::UNDEFINED;               ///< Depth test function.
             utils::Span<VertexBufferBinding> vertexBufferBindings;          ///< Vertex buffer layout.
             BlendDescriptor blend = {};                                      ///< Blending settings.
-            utils::Handle<RenderPassLayout> renderPassLayout;               ///< Associated render pass layout.
         };
 
         ShaderPipelineType type = ShaderPipelineType::GRAPHICS;             ///< Shader pipeline type.

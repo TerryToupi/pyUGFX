@@ -11,8 +11,6 @@
 #include <resources/vulkanBuffer.hpp>
 #include <resources/vulkanDynamicBuffers.hpp>
 #include <resources/vulkanDynamicBuffersLayout.hpp>
-#include <resources/vulkanRenderPass.hpp>
-#include <resources/vulkanRenderPassLayout.hpp>
 #include <resources/vulkanSampler.hpp>
 #include <resources/vulkanShader.hpp>
 #include <resources/vulkanTexture.hpp>
@@ -33,8 +31,6 @@ namespace gfx
         virtual utils::Handle<gfx::Buffer>               CreateBuffer(const gfx::BufferDescriptor&& desc) override;
         virtual utils::Handle<gfx::DynamicBuffers>       CreateDynamicBuffers(const gfx::DynamicBuffersDescriptor&& desc) override;
         virtual utils::Handle<gfx::DynamicBuffersLayout> CreateDynamicBuffersLayout(const gfx::DynamicBuffersLayoutDescriptor&& desc) override;
-        virtual utils::Handle<gfx::RenderPass>           CreateRenderPass(const gfx::RenderPassDescriptor&& desc) override;
-        virtual utils::Handle<gfx::RenderPassLayout>     CreateRenderPassLayout(const gfx::RenderPassLayoutDescriptor&& desc) override;
 
         virtual void Remove(utils::Handle<gfx::Shader> handle) override;
         virtual void Remove(utils::Handle<gfx::BindGroup> handle) override;
@@ -44,10 +40,6 @@ namespace gfx
         virtual void Remove(utils::Handle<gfx::Buffer> handle) override;
         virtual void Remove(utils::Handle<gfx::DynamicBuffers> handle) override;
         virtual void Remove(utils::Handle<gfx::DynamicBuffersLayout> handle) override;
-        virtual void Remove(utils::Handle<gfx::RenderPass> handle) override;
-        virtual void Remove(utils::Handle<gfx::RenderPassLayout> handle) override;
-
-        virtual void SetBufferData(utils::Handle<Buffer> buffer, uint32_t offset, const void* data, uint32_t size) override;
 
         utils::Handle<gfx::Shader>               Add(const gfx::VulkanShader& shader);
         utils::Handle<gfx::BindGroup>            Add(const gfx::VulkanBindGroup& bindGroup);
@@ -57,8 +49,6 @@ namespace gfx
         utils::Handle<gfx::Buffer>               Add(const gfx::VulkanBuffer& buffer);
         utils::Handle<gfx::DynamicBuffers>       Add(const gfx::VulkanDynamicBuffers& buffer);
         utils::Handle<gfx::DynamicBuffersLayout> Add(const gfx::VulkanDynamicBuffersLayout& buffer);
-        utils::Handle<gfx::RenderPass>           Add(const gfx::VulkanRenderPass& renderPass);
-        utils::Handle<gfx::RenderPassLayout>     Add(const gfx::VulkanRenderPassLayout& renderPassLayout);
 
         gfx::VulkanShader*                Get(utils::Handle<gfx::Shader> handle);
         gfx::VulkanBindGroup*             Get(utils::Handle<gfx::BindGroup> handle);
@@ -68,8 +58,6 @@ namespace gfx
         gfx::VulkanBuffer*                Get(utils::Handle<gfx::Buffer> handle);
         gfx::VulkanDynamicBuffers*        Get(utils::Handle<gfx::DynamicBuffers> handle);
         gfx::VulkanDynamicBuffersLayout*  Get(utils::Handle<gfx::DynamicBuffersLayout> handle);
-        gfx::VulkanRenderPass*            Get(utils::Handle<gfx::RenderPass> handle);
-        gfx::VulkanRenderPassLayout*      Get(utils::Handle<gfx::RenderPassLayout> handle);
 
     private:
         utils::Pool<gfx::VulkanShader, gfx::Shader> m_Shaders{ 16u, "Shaders" };
@@ -80,9 +68,6 @@ namespace gfx
         utils::Pool<gfx::VulkanBuffer, gfx::Buffer> m_Buffers{ 32u, "Buffers" };
         utils::Pool<gfx::VulkanDynamicBuffers, gfx::DynamicBuffers> m_DynamicBuffers{ 16u, "DynamicBuffers" };
         utils::Pool<gfx::VulkanDynamicBuffersLayout, gfx::DynamicBuffersLayout> m_DynamicBuffersLayout{ 16u, "DynamicBuffersLayout" };
-        utils::Pool<gfx::VulkanRenderPass, gfx::RenderPass> m_RenderPasses{ 8u, "RenderPasses" };
-        utils::Pool<gfx::VulkanRenderPassLayout, gfx::RenderPassLayout> m_RenderPassLayouts{ 8u, "RenderPassLayouts" };
-
     };
 }
 

@@ -1,0 +1,37 @@
+/// \cond
+
+#ifndef __VULKAN_PASS_RENDERER_HPP__
+#define __VULKAN_PASS_RENDERER_HPP__
+
+#include <render/passRenderer.hpp>
+#include <vulkanEnums.hpp>
+#include <vulkanCommon.hpp>
+
+namespace gfx
+{
+	class VulkanCommandBuffer : public CommandBuffer
+	{
+	public:
+        virtual void BeginRenderPass(
+            const RenderDescriptor&& cmd,
+            utils::Span<uint32_t> drawCalls
+        ) override;
+
+        virtual void BeginComputePass(
+            utils::Span<utils::Handle<Texture>> textureWrite,
+            utils::Span<utils::Handle<Buffer>> bufferWrite,
+            utils::Span<Dispatch> dispatches
+        ) override;
+
+	private:
+        VkCommandPool m_cmdPool;
+        VkCommandBuffer m_cmdBuffer;
+        gfx::CommandBufferState m_state = gfx::CommandBufferState::EMPTY;
+            
+		friend class VulkanRenderer;
+	};
+}
+
+#endif
+
+/// \endcond

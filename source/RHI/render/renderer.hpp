@@ -57,7 +57,7 @@ namespace gfx
          * @param type The type of command buffer to create (graphics, compute, mesh, etc.).
          * @return Pointer to the created CommandBuffer.
          */
-        virtual CommandBuffer* BeginCommandRecording(gfx::CommandBufferType type) = 0;
+        virtual CommandBuffer* BeginCommandRecording() = 0;
     };
 }
 

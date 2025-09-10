@@ -7,14 +7,13 @@
 
 void run()
 {
-    uint32_t buf[1024];
-    gfx::CommandBuffer* buffer = gfx::Renderer::instance->BeginCommandRecording(gfx::CommandBufferType::MAIN);
-    buffer->BeginRenderPass({
-        .swapTarget = {
-            .enabled = true
-        }
-    }, utils::Span<uint32_t>(buf));
-    buffer->Submit();
+    //uint32_t buf[1024];
+    //gfx::CommandBuffer* buffer = gfx::Renderer::instance->BeginCommandRecording();
+    //buffer->BeginRenderPass({
+    //    .swapTarget = {
+    //        .enabled = true
+    //    }
+    //}, utils::Span<uint32_t>(buf));
     return;
 }
 

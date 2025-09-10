@@ -55,16 +55,6 @@ using namespace utils;
 namespace gfx
 {
     /**
-     * @brief A 3D integer vector.
-     */
-    struct Vector3I
-    {
-        uint32_t x = 0; /**< X component */
-        uint32_t y = 0; /**< Y component */
-        uint32_t z = 0; /**< Z component */
-    };
-
-    /**
      * @brief Represents a single draw command with associated resources and offsets.
      */
     struct Draw
@@ -87,17 +77,17 @@ namespace gfx
      */
     struct Dispatch
     {
-        Handle<Shader> shader;                 /**< Shader used for the dispatch call. */
-        Handle<BindGroup> bindGroups[3];       /**< Up to three bind groups for resource binding. */
-        Handle<DynamicBuffers> dynamicBuffer;  /**< Dynamic buffer resource. */
-        uint32_t dynamicBufferOffset[2];       /**< Dynamic buffer offsets. */
-        Vector3I threadGroupCount;             /**< Thread group counts for X, Y, Z dimensions. */
+        Handle<Shader> shader;                          /**< Shader used for the dispatch call. */
+        Handle<BindGroup> bindGroups[3];                /**< Up to three bind groups for resource binding. */
+        Handle<DynamicBuffers> dynamicBuffer;           /**< Dynamic buffer resource. */
+        uint32_t dynamicBufferOffset[2];                /**< Dynamic buffer offsets. */
+        uint32_t threadGroupCount[3] = { 0, 0, 0 };     /**< Thread group counts for X, Y, Z dimensions. */
     };
 
     /**
 	 * @brief Represents a render pass command that's specifying the color targets and the depth target of the pass.
 	 */
-    struct RenderPassCommand
+    struct RenderDescriptor
     {
         /**
          * @brief Represents a single color target attachment.
@@ -139,58 +129,6 @@ namespace gfx
         DepthTarget depthTarget;
         SwapChainTarget swapTarget;
         utils::Span<ColorTarget> colorTargets;
-    };
-
-    /**
-     * @brief Encodes draw commands into a compact uint32_t stream.
-     *
-     * This encoder tracks state changes between draws to minimize redundant data in the stream.
-     */
-    class DrawStreamEncoder
-    {
-    public:
-        /** @brief Constructs a new DrawStreamEncoder with default state. */
-        DrawStreamEncoder();
-        
-        /**
-         * @brief Encodes a draw command into the internal stream.
-         *
-         * @param draw The draw command to encode.
-         */
-        void Encode(const Draw& draw);
-
-        /**
-         * @brief Retrieves the encoded command stream.
-         *
-         * @return Reference to the internal vector of encoded commands.
-         */
-        std::vector<uint32_t>& Get();
-
-    private:
-        Draw m_CurrState;              /**< Current tracked draw state. */
-        std::vector<uint32_t> m_Stream;/**< Encoded command stream. */
-    };
-
-    /**
-     * @brief Decodes a compact uint32_t command stream into Draw structures.
-     */
-    class DrawStreamDecoder
-    {
-    public:
-        /** @brief Constructs a new DrawStreamDecoder with default state. */
-        DrawStreamDecoder();
-
-        /**
-         * @brief Decodes a draw command from the stream.
-         *
-         * @param index Index in the stream to start decoding from.
-         * @param stream The encoded command stream.
-         * @return The new index in the stream after decoding.
-         */
-        uint32_t Decode(uint32_t index, Span<uint32_t> stream);
-
-        uint32_t currDirty; /**< Current dirty bitmask. */
-        Draw currState;     /**< Current decoded draw state. */
     };
 }
 

@@ -15,7 +15,6 @@
 
 #include <handle.hpp>
 #include <span.hpp>
-#include <resources/renderPass.hpp>
 #include <resources/Buffer.hpp>
 #include <resources/texture.hpp>
 #include <render/commands.hpp>
@@ -43,7 +42,7 @@ namespace gfx
          * @param drawCalls  Encoded draw command stream (from DrawStreamEncoder).
          */
         virtual void BeginRenderPass(
-            const RenderPassCommand&& cmd,
+            const RenderDescriptor&& cmd,
             utils::Span<uint32_t> drawCalls
         ) = 0;
 
@@ -59,13 +58,6 @@ namespace gfx
             utils::Span<utils::Handle<Buffer>> bufferWrite,
             utils::Span<Dispatch> dispatches
         ) = 0;
-
-        /**
-         * @brief Submits all recorded passes and commands to the GPU for execution.
-         *
-         * This finalizes the command buffer and queues it for execution.
-         */
-        virtual void Submit() = 0;
     };
 }
 

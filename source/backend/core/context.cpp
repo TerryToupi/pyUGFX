@@ -5,9 +5,6 @@
 
 #include <device.hpp>
 #include <window.hpp>
-
-#include <window.hpp>
-#include <device.hpp>
 #include <resources/resourceManger.hpp>
 #include <render/renderer.hpp>
 
@@ -19,8 +16,8 @@
 
 static void VulkanInit()
 {
-    gfx::Window::instance = gfx::CreateShared<gfx::VulkanWindow>();
     gfx::Device::instance = gfx::CreateShared<gfx::VulkanDevice>();
+    gfx::Window::instance = gfx::CreateShared<gfx::VulkanWindow>();
     gfx::ResourceManager::instance = gfx::CreateShared<gfx::VulkanResourceManager>();
     gfx::Renderer::instance = gfx::CreateShared<gfx::VulkanRenderer>();
 
@@ -28,10 +25,18 @@ static void VulkanInit()
         .name = "Heavy",
         .width = 800,
         .height = 600,
+        .vSync = false
     });
     gfx::Device::instance->Init();
+    gfx::Renderer::instance->Init();
     gfx::ResourceManager::instance->Init();
-    gfx::VulkanRenderer::instance->Init();
+
+    static_cast<gfx::VulkanWindow*>(gfx::Window::instance.get())->
+        swapChain.init();
+    static_cast<gfx::VulkanWindow*>(gfx::Window::instance.get())->
+        swapChain.initResources(false);
+    static_cast<gfx::VulkanRenderer*>(gfx::Renderer::instance.get())->
+        CreateFrameSubmission(static_cast<gfx::VulkanWindow*>(gfx::Window::instance.get())->swapChain.getMaxFramesInFlight());
 }
 #endif
 
@@ -71,64 +76,71 @@ void setup::ContextShutDown()
     gfx::ResourceManager::instance.reset();
     gfx::Window::instance.reset();
 	gfx::Device::instance.reset();
-
-	diag::Logger::ShutDown();
 }
 
 void setup::ContextInit(Platforms platform)
 { 
-	diag::Logger::Init();
+    utils::Logger& logger = utils::Logger::getInstance();
+    logger.setLogLevel(utils::Logger::LogLevel::eINFO); 
+    logger.setShowFlags(utils::Logger::eSHOW_TIME | utils::Logger::eSHOW_LEVEL);
+    logger.setOutputFile("pyUGFX_Logs.txt");
+    logger.enableFileOutput(true);
 
-	GFX_TRACE("Logger has been initialized!");
+    try
+    {
+		switch (platform)
+		{
+		case setup::UNDEFINED:
+			#if PYUGFX_ENABLE_VULKAN && defined(_WIN64)
+			{
+				LOGI("Win32 platform detected, Initializing Vulkan API!");
+				VulkanInit();
+				return;
+			}
+			#endif
 
-	switch (platform)
-	{
-	case setup::UNDEFINED:
-        #if PYUGFX_ENABLE_VULKAN && defined(_WIN64)
-        {
-            GFX_TRACE("Win32 platform detected, Initializing Vulkan API!");
-            VulkanInit();
-            return;
-        }
-        #endif
+			#if PYUGFX_ENABLE_METAL && defined(__APPLE__)
+			{
+				LOGI("MacOS platform detected, Initializing Metal API!");
+				MetalInit();
+				return;
+			}
+			#endif
 
-        #if PYUGFX_ENABLE_METAL && defined(__APPLE__)
-        {
-            GFX_TRACE("MacOS platform detected, Initializing Metal API!");
-            MetalInit();
-            return;
-        }
-        #endif
+			LOGE("Can't detect OS Platform!");
+			exit(1);
+			break;
 
-        GFX_ERROR("Can't detect OS Platform!");
-        exit(1);
-		break;
+		case setup::VULKAN:
+			#if PYUGFX_ENABLE_VULKAN
+			{
+				LOGI("Initializing Vulkan!");
+				VulkanInit();
+				return;
+			}
+			#endif
+			break;
 
-	case setup::VULKAN:
-        #if PYUGFX_ENABLE_VULKAN
-        {
-            GFX_TRACE("Initializing Vulkan!");
-            VulkanInit();
-            return;
-        }
-        #endif
-		break;
+		case setup::METAL:
+			#if PYUGFX_ENABLE_METAL
+			{
+				LOGI("Initializing Metal!");
+				MetalInit();
+				return;
+			}
+			#endif
+			break;
 
-	case setup::METAL:
-        #if PYUGFX_ENABLE_METAL
-        {
-			GFX_TRACE("Initializing Metal!");
-			MetalInit();
-			return;
+		default:
+			LOGE("Can't detect OS Platform!");
+			exit(1);
+			break;
 		}
-        #endif
-		break;
-
-	default:
-        GFX_ERROR("Can't detect OS Platform!");
-        exit(1);
-		break;
-	}
+    }
+    catch (const std::exception& e)
+    {
+        LOGE("%s", e.what());
+    }
 }
 
 /// \endcond
