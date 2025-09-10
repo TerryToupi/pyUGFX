@@ -16,6 +16,12 @@
 
 static void VulkanInit()
 {
+    // initilize the meta loader
+    VK_CHECK(volkInitialize());
+
+    ASSERT(glfwInit() == GLFW_TRUE, "Could not initilize GLFW!");
+    ASSERT(glfwVulkanSupported() == GLFW_TRUE, "GLFW: Vulkan not supported!");
+
     gfx::Device::instance = gfx::CreateShared<gfx::VulkanDevice>();
     gfx::Window::instance = gfx::CreateShared<gfx::VulkanWindow>();
     gfx::ResourceManager::instance = gfx::CreateShared<gfx::VulkanResourceManager>();
@@ -65,19 +71,28 @@ static void MetalInit()
 
 void setup::ContextShutDown()
 {
-    if (gfx::Renderer::instance.get() != nullptr)
-        gfx::Renderer::instance->ShutDown();
-    if (gfx::ResourceManager::instance.get() != nullptr)
-		gfx::ResourceManager::instance->ShutDown();
-    if (gfx::Window::instance.get() != nullptr)
-		gfx::Window::instance->ShutDown();
-    if (gfx::Device::instance.get() != nullptr)
-		gfx::Device::instance->ShutDown();
+    try 
+    {
+		if (gfx::Renderer::instance.get() != nullptr)
+			gfx::Renderer::instance->ShutDown();
+		if (gfx::ResourceManager::instance.get() != nullptr)
+			gfx::ResourceManager::instance->ShutDown();
+		if (gfx::Window::instance.get() != nullptr)
+			gfx::Window::instance->ShutDown();
+		if (gfx::Device::instance.get() != nullptr)
+			gfx::Device::instance->ShutDown();
 
-    gfx::Renderer::instance.reset();
-    gfx::ResourceManager::instance.reset();
-    gfx::Window::instance.reset();
-	gfx::Device::instance.reset();
+		gfx::Renderer::instance.reset();
+		gfx::ResourceManager::instance.reset();
+		gfx::Window::instance.reset();
+		gfx::Device::instance.reset();
+
+		glfwTerminate();
+    }
+    catch (const std::exception& e)
+    {
+		LOGE("%s", e.what());
+    }
 }
 
 void setup::ContextInit(Platforms platform)

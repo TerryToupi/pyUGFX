@@ -5,11 +5,8 @@
 void gfx::VulkanWindow::Init(const WindowDescriptor&& desc)
 {
     m_WindowConfig = desc;
-    ASSERT(glfwInit() == GLFW_TRUE, "Could not initilize GLFW!");
-//    ASSERT(glfwVulkanSupported() == GLFW_TRUE, "GLFW: Vulkan not supported!");
 
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-
     m_window = glfwCreateWindow(m_WindowConfig.width, m_WindowConfig.height, m_WindowConfig.name.c_str(), nullptr, nullptr);
 }
 
@@ -17,7 +14,6 @@ void gfx::VulkanWindow::ShutDown()
 {
     swapChain.destroy();
     glfwDestroyWindow(m_window);
-    glfwTerminate();
 }
 
 void gfx::VulkanWindow::Run(const GameLoop& func)

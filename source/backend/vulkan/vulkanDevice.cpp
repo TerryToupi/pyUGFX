@@ -83,9 +83,6 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(VkDebugUtilsMessageSeverityF
 
 void gfx::VulkanDevice::Init()
 {
-    // initilize the meta loader
-    VK_CHECK(volkInitialize());
-
 	initInstance();
 	selectPhysicalDevice();
 	initLogicalDevice();

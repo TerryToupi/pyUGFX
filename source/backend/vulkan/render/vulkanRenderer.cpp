@@ -367,9 +367,9 @@ void gfx::VulkanRenderer::CreateTransientCommandPool()
     gfx::QueueInfo queue = static_cast<VulkanDevice*>(gfx::Device::instance.get())->getGraphicsQueue();
 
     const VkCommandPoolCreateInfo commandPoolCreateInfo{
-    .sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO,
-    .flags = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT,  // Hint that commands will be short-lived
-    .queueFamilyIndex = queue.familyIndex,
+		.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO,
+		.flags = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT,  // Hint that commands will be short-lived
+		.queueFamilyIndex = queue.familyIndex,
     };
     VK_CHECK(vkCreateCommandPool(device, &commandPoolCreateInfo, nullptr, &m_transientCmdPool));
     DBG_VK_NAME(m_transientCmdPool);
