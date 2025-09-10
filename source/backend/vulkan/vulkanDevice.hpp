@@ -57,11 +57,15 @@ namespace gfx
 		uint32_t m_apiVersion{ 0 };  // The Vulkan API version
 
 		// Instance extension, extra extensions can be added here
-		std::vector<const char*> m_instanceExtensions = { 
-			VK_KHR_SURFACE_EXTENSION_NAME,
-			VK_KHR_GET_SURFACE_CAPABILITIES_2_EXTENSION_NAME,
-			VK_EXT_SWAPCHAIN_COLOR_SPACE_EXTENSION_NAME
-		};
+        std::vector<const char*> m_instanceExtensions = {
+            VK_KHR_SURFACE_EXTENSION_NAME,
+            VK_KHR_GET_SURFACE_CAPABILITIES_2_EXTENSION_NAME,
+            VK_EXT_SWAPCHAIN_COLOR_SPACE_EXTENSION_NAME,
+            
+#if defined(__APPLE__)
+            VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME
+#endif
+        };
 		std::vector<const char*> m_instanceLayers = {};  // Add extra layers here
 
 		// Device features, extra features can be added here
@@ -89,6 +93,10 @@ namespace gfx
 		// Device extension, extra extensions can be added here
 		std::vector<const char*> m_deviceExtensions = {
 			VK_KHR_SWAPCHAIN_EXTENSION_NAME,  // Needed for display on the screen
+            
+#if defined(__APPLE__)
+            VK_KHR_PORTABILITY_SUBSET_EXTENSION_NAME
+#endif
 		};
 
 		VkInstance                         m_instance{};        // The Vulkan instance

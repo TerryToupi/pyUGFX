@@ -20,23 +20,25 @@ static void VulkanInit()
     gfx::Window::instance = gfx::CreateShared<gfx::VulkanWindow>();
     gfx::ResourceManager::instance = gfx::CreateShared<gfx::VulkanResourceManager>();
     gfx::Renderer::instance = gfx::CreateShared<gfx::VulkanRenderer>();
+    
+    gfx::VulkanDevice* deviceManager = static_cast<gfx::VulkanDevice*>(gfx::Device::instance.get());
+    gfx::VulkanWindow* windowManager = static_cast<gfx::VulkanWindow*>(gfx::Window::instance.get());
+    gfx::VulkanResourceManager* resourceManager = static_cast<gfx::VulkanResourceManager*>(gfx::ResourceManager::instance.get());
+    gfx::VulkanRenderer* renderer = static_cast<gfx::VulkanRenderer*>(gfx::Renderer::instance.get());
 
-    gfx::Window::instance->Init({
+    windowManager->Init({
         .name = "Heavy",
         .width = 800,
         .height = 600,
         .vSync = false
     });
-    gfx::Device::instance->Init();
-    gfx::Renderer::instance->Init();
-    gfx::ResourceManager::instance->Init();
+    deviceManager->Init();
+    renderer->Init();
+    resourceManager->Init();
 
-    static_cast<gfx::VulkanWindow*>(gfx::Window::instance.get())->
-        swapChain.init();
-    static_cast<gfx::VulkanWindow*>(gfx::Window::instance.get())->
-        swapChain.initResources(false);
-    static_cast<gfx::VulkanRenderer*>(gfx::Renderer::instance.get())->
-        CreateFrameSubmission(static_cast<gfx::VulkanWindow*>(gfx::Window::instance.get())->swapChain.getMaxFramesInFlight());
+    windowManager->swapChain.init();
+    windowManager->swapChain.initResources(false);
+    renderer->CreateFrameSubmission(windowManager->swapChain.getMaxFramesInFlight());
 }
 #endif
 

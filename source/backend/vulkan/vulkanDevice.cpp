@@ -141,6 +141,9 @@ void gfx::VulkanDevice::initInstance()
     const VkInstanceCreateInfo instanceCreateInfo{
         .sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
         .pNext = validationSettings.buildPNextChain(),
+#if defined(__APPLE__)
+        .flags = VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR,
+#endif
         .pApplicationInfo = &applicationInfo,
         .enabledLayerCount = uint32_t(m_instanceLayers.size()),
         .ppEnabledLayerNames = m_instanceLayers.data(),

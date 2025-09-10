@@ -6,7 +6,7 @@ void gfx::VulkanWindow::Init(const WindowDescriptor&& desc)
 {
     m_WindowConfig = desc;
     ASSERT(glfwInit() == GLFW_TRUE, "Could not initilize GLFW!");
-    ASSERT(glfwVulkanSupported() == GLFW_TRUE, "GLFW: Vulkan not supported!");
+//    ASSERT(glfwVulkanSupported() == GLFW_TRUE, "GLFW: Vulkan not supported!");
 
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 
