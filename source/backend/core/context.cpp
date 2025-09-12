@@ -32,19 +32,15 @@ static void VulkanInit()
     gfx::VulkanResourceManager* resourceManager = static_cast<gfx::VulkanResourceManager*>(gfx::ResourceManager::instance.get());
     gfx::VulkanRenderer* renderer = static_cast<gfx::VulkanRenderer*>(gfx::Renderer::instance.get());
 
+    deviceManager->Init();
     windowManager->Init({
         .name = "Heavy",
         .width = 800,
         .height = 600,
-        .vSync = false
+        .vSync = true 
     });
-    deviceManager->Init();
     renderer->Init();
     resourceManager->Init();
-
-    windowManager->swapChain.init();
-    windowManager->swapChain.initResources(false);
-    renderer->CreateFrameSubmission(windowManager->swapChain.getMaxFramesInFlight());
 }
 #endif
 

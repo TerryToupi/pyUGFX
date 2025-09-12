@@ -8,6 +8,9 @@ void gfx::VulkanWindow::Init(const WindowDescriptor&& desc)
 
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
     m_window = glfwCreateWindow(m_WindowConfig.width, m_WindowConfig.height, m_WindowConfig.name.c_str(), nullptr, nullptr);
+
+    swapChain.init();
+    swapChain.initResources(desc.vSync);
 }
 
 void gfx::VulkanWindow::ShutDown()
@@ -97,8 +100,9 @@ void gfx::Swapchain::destroy()
 
 VkExtent2D gfx::Swapchain::initResources(bool vSync)
 {
-    VkPhysicalDevice physicalDevice = static_cast<VulkanDevice*>(gfx::Device::instance.get())->getPhysicalDevice();
-    VkDevice device = static_cast<VulkanDevice*>(gfx::Device::instance.get())->getDevice();
+    VulkanDevice* deviceManager = static_cast<VulkanDevice*>(gfx::Device::instance.get());
+    VkPhysicalDevice physicalDevice = deviceManager->getPhysicalDevice();
+    VkDevice device = deviceManager->getDevice();
     
     VkExtent2D outWindowSize;
 
@@ -204,16 +208,10 @@ VkExtent2D gfx::Swapchain::initResources(bool vSync)
 
     // Transition images to present layout
     {
-        VkCommandBuffer cmd = static_cast<VulkanRenderer*>(gfx::Renderer::instance.get())->
-            BeginSingleTimeCommandRecording();
-
         for (uint32_t i = 0; i < m_maxFramesInFlight; i++)
         {
-            static_cast<VulkanRenderer*>(gfx::Renderer::instance.get())->
-                cmdTransitionImageLayout(cmd, m_nextImages[i].image, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_PRESENT_SRC_KHR);
+            deviceManager->TransitionImageLayout(m_nextImages[i].image, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_PRESENT_SRC_KHR);
         }
-        static_cast<VulkanRenderer*>(gfx::Renderer::instance.get())->
-            EndSingleTimeCommandRecording(cmd);
     }
 
     return outWindowSize;

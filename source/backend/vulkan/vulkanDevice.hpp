@@ -46,7 +46,38 @@ namespace gfx
 		VkPhysicalDeviceExtendedDynamicState3FeaturesEXT getDynamicState3Features() const { return m_dynamicState3Features; }
 		VkPhysicalDeviceSwapchainMaintenance1FeaturesEXT getSwapchainFeatures() const { return m_swapchainFeatures; }
 
+		void cmdTransitionImageLayout(VkCommandBuffer    cmd,
+										VkImage            image,
+										VkImageLayout      oldLayout,
+										VkImageLayout      newLayout,
+										VkImageAspectFlags aspectMask = VK_IMAGE_ASPECT_COLOR_BIT);
+		void TransitionImageLayout(VkImage            image,
+									VkImageLayout      oldLayout,
+									VkImageLayout      newLayout,
+									VkImageAspectFlags aspectMask = VK_IMAGE_ASPECT_COLOR_BIT);
+
+		void cmdBufferMemoryBarrier(VkCommandBuffer       commandBuffer,
+									VkBuffer              buffer,
+									VkPipelineStageFlags2 srcStageMask,
+									VkPipelineStageFlags2 dstStageMask,
+									VkAccessFlags2        srcAccessMask = 0,  // Default to infer if not provided
+									VkAccessFlags2        dstAccessMask = 0,  // Default to infer if not provided
+									VkDeviceSize          offset = 0,
+									VkDeviceSize          size = VK_WHOLE_SIZE,
+									uint32_t              srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED,
+									uint32_t              dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED);
+		void BufferMemoryBarrier(VkBuffer              buffer,
+								 VkPipelineStageFlags2 srcStageMask,
+								 VkPipelineStageFlags2 dstStageMask,
+								 VkAccessFlags2        srcAccessMask = 0,  // Default to infer if not provided
+								 VkAccessFlags2        dstAccessMask = 0,  // Default to infer if not provided
+								 VkDeviceSize          offset = 0,
+								 VkDeviceSize          size = VK_WHOLE_SIZE,
+								 uint32_t              srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED,
+								 uint32_t              dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED);
+
 	private:
+		void CreateTransientCommandPool();
 		void getAvailableInstanceExtensions();
 		void getAvailableDeviceExtensions();
 		bool extensionIsAvailable(const std::string& name, const std::vector<VkExtensionProperties>& extensions);
@@ -106,6 +137,8 @@ namespace gfx
 		VkDebugUtilsMessengerEXT           m_callback{ VK_NULL_HANDLE };  // The debug callback
 		std::vector<VkExtensionProperties> m_instanceExtensionsAvailable{};
 		std::vector<VkExtensionProperties> m_deviceExtensionsAvailable{};
+		VkCommandPool					   m_transientCmdPool{};
+
 #ifdef NDEBUG
 		bool m_enableValidationLayers = false;
 #else

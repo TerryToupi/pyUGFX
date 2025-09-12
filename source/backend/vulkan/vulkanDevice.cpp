@@ -81,16 +81,119 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(VkDebugUtilsMessageSeverityF
     return VK_FALSE;
 }
 
+static VkCommandBuffer BeginSingleTimeCommandRecording(VkDevice device, VkCommandPool pool)
+{
+    const VkCommandBufferAllocateInfo allocInfo{ .sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO,
+                                                .commandPool = pool,
+                                                .level = VK_COMMAND_BUFFER_LEVEL_PRIMARY,
+                                                .commandBufferCount = 1 };
+    VkCommandBuffer                   cmd{};
+    VK_CHECK(vkAllocateCommandBuffers(device, &allocInfo, &cmd));
+    const VkCommandBufferBeginInfo beginInfo{ .sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO,
+                                             .flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT };
+    VK_CHECK(vkBeginCommandBuffer(cmd, &beginInfo));
+    return cmd;
+}
+
+static void EndSingleTimeCommandRecording(VkDevice device, VkCommandBuffer cmd, VkCommandPool pool, VkQueue queue)
+{
+    // Submit and clean up
+    VK_CHECK(vkEndCommandBuffer(cmd));
+
+    // Create fence for synchronization
+    const VkFenceCreateInfo fenceInfo{ .sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO };
+    std::array<VkFence, 1>  fence{};
+    VK_CHECK(vkCreateFence(device, &fenceInfo, nullptr, fence.data()));
+
+    const VkCommandBufferSubmitInfo cmdBufferInfo{ .sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_SUBMIT_INFO, .commandBuffer = cmd };
+    const std::array<VkSubmitInfo2, 1> submitInfo{
+        {{.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO_2, .commandBufferInfoCount = 1, .pCommandBufferInfos = &cmdBufferInfo}} };
+    VK_CHECK(vkQueueSubmit2(queue, uint32_t(submitInfo.size()), submitInfo.data(), fence[0]));
+    VK_CHECK(vkWaitForFences(device, uint32_t(fence.size()), fence.data(), VK_TRUE, UINT64_MAX));
+
+    // Cleanup
+    vkDestroyFence(device, fence[0], nullptr);
+    vkFreeCommandBuffers(device, pool, 1, &cmd);
+}
+
+static constexpr std::tuple<VkPipelineStageFlags2, VkAccessFlags2> makePipelineStageAccessTuple(VkImageLayout state)
+{
+    switch (state)
+    {
+    case VK_IMAGE_LAYOUT_UNDEFINED:
+        return std::make_tuple(VK_PIPELINE_STAGE_2_TOP_OF_PIPE_BIT, VK_ACCESS_2_NONE);
+    case VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL:
+        return std::make_tuple(VK_PIPELINE_STAGE_2_COLOR_ATTACHMENT_OUTPUT_BIT,
+            VK_ACCESS_2_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_2_COLOR_ATTACHMENT_WRITE_BIT);
+    case VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL:
+        return std::make_tuple(VK_PIPELINE_STAGE_2_FRAGMENT_SHADER_BIT | VK_PIPELINE_STAGE_2_COMPUTE_SHADER_BIT
+            | VK_PIPELINE_STAGE_2_PRE_RASTERIZATION_SHADERS_BIT,
+            VK_ACCESS_2_SHADER_READ_BIT);
+    case VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL:
+        return std::make_tuple(VK_PIPELINE_STAGE_2_TRANSFER_BIT, VK_ACCESS_2_TRANSFER_WRITE_BIT);
+    case VK_IMAGE_LAYOUT_GENERAL:
+        return std::make_tuple(VK_PIPELINE_STAGE_2_COMPUTE_SHADER_BIT | VK_PIPELINE_STAGE_2_TRANSFER_BIT,
+            VK_ACCESS_2_MEMORY_READ_BIT | VK_ACCESS_2_MEMORY_WRITE_BIT | VK_ACCESS_2_TRANSFER_WRITE_BIT);
+    case VK_IMAGE_LAYOUT_PRESENT_SRC_KHR:
+        return std::make_tuple(VK_PIPELINE_STAGE_2_COLOR_ATTACHMENT_OUTPUT_BIT, VK_ACCESS_2_NONE);
+    default: {
+        ASSERT(false, "Unsupported layout transition!");
+        return std::make_tuple(VK_PIPELINE_STAGE_2_ALL_COMMANDS_BIT, VK_ACCESS_2_MEMORY_READ_BIT | VK_ACCESS_2_MEMORY_WRITE_BIT);
+    }
+    }
+}
+
+static VkImageMemoryBarrier2 createImageMemoryBarrier(VkImage image,
+														VkImageLayout oldLayout,
+														VkImageLayout newLayout, 
+														VkImageSubresourceRange subresourceRange)
+{
+    const auto [srcStage, srcAccess] = makePipelineStageAccessTuple(oldLayout);
+    const auto [dstStage, dstAccess] = makePipelineStageAccessTuple(newLayout);
+
+    VkImageMemoryBarrier2 barrier{ .sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER_2,
+                                  .srcStageMask = srcStage,
+                                  .srcAccessMask = srcAccess,
+                                  .dstStageMask = dstStage,
+                                  .dstAccessMask = dstAccess,
+                                  .oldLayout = oldLayout,
+                                  .newLayout = newLayout,
+                                  .srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED,
+                                  .dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED,
+                                  .image = image,
+                                  .subresourceRange = subresourceRange };
+    return barrier;
+}
+
+static constexpr VkAccessFlags2 inferAccessMaskFromStage(VkPipelineStageFlags2 stage, bool src)
+{
+    VkAccessFlags2 access = 0;
+
+    // Handle each possible stage bit
+    if ((stage & VK_PIPELINE_STAGE_2_COMPUTE_SHADER_BIT) != 0)
+        access |= src ? VK_ACCESS_2_SHADER_READ_BIT : VK_ACCESS_2_SHADER_WRITE_BIT;
+    if ((stage & VK_PIPELINE_STAGE_2_FRAGMENT_SHADER_BIT) != 0)
+        access |= src ? VK_ACCESS_2_SHADER_READ_BIT : VK_ACCESS_2_SHADER_WRITE_BIT;
+    if ((stage & VK_PIPELINE_STAGE_2_VERTEX_ATTRIBUTE_INPUT_BIT) != 0)
+        access |= VK_ACCESS_2_VERTEX_ATTRIBUTE_READ_BIT;  // Always read-only
+    if ((stage & VK_PIPELINE_STAGE_2_TRANSFER_BIT) != 0)
+        access |= src ? VK_ACCESS_2_TRANSFER_READ_BIT : VK_ACCESS_2_TRANSFER_WRITE_BIT;
+    ASSERT(access != 0, "Missing stage implementation");
+    return access;
+}
+
 void gfx::VulkanDevice::Init()
 {
 	initInstance();
 	selectPhysicalDevice();
 	initLogicalDevice();
+    CreateTransientCommandPool();
 }
 
 void gfx::VulkanDevice::ShutDown()
 {
 	vkDeviceWaitIdle(m_device);
+    vkDestroyCommandPool(m_device, m_transientCmdPool, nullptr);
     if (m_enableValidationLayers && vkDestroyDebugUtilsMessengerEXT)
     {
         vkDestroyDebugUtilsMessengerEXT(m_instance, m_callback, nullptr);
@@ -341,4 +444,85 @@ gfx::QueueInfo gfx::VulkanDevice::getQueue(VkQueueFlagBits flags) const
         }
     }
     return queueInfo;
+}
+
+void gfx::VulkanDevice::CreateTransientCommandPool()
+{
+    const VkCommandPoolCreateInfo commandPoolCreateInfo{
+		.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO,
+		.flags = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT,  // Hint that commands will be short-lived
+		.queueFamilyIndex = m_queues[0].familyIndex,
+    };
+    VK_CHECK(vkCreateCommandPool(m_device, &commandPoolCreateInfo, nullptr, &m_transientCmdPool));
+    DBG_VK_NAME(m_transientCmdPool);
+}
+
+
+void gfx::VulkanDevice::cmdTransitionImageLayout(VkCommandBuffer cmd, VkImage image, VkImageLayout oldLayout, VkImageLayout newLayout, VkImageAspectFlags aspectMask)
+{
+    const VkImageMemoryBarrier2 barrier = createImageMemoryBarrier(image, oldLayout, newLayout, { aspectMask, 0, 1, 0, 1 });
+    const VkDependencyInfo depInfo{ .sType = VK_STRUCTURE_TYPE_DEPENDENCY_INFO, .imageMemoryBarrierCount = 1, .pImageMemoryBarriers = &barrier };
+
+    vkCmdPipelineBarrier2(cmd, &depInfo);
+}
+
+void gfx::VulkanDevice::TransitionImageLayout(VkImage image, VkImageLayout oldLayout, VkImageLayout newLayout, VkImageAspectFlags aspectMask)
+{
+    VkCommandBuffer cmd = BeginSingleTimeCommandRecording(m_device, m_transientCmdPool);
+    cmdTransitionImageLayout(cmd, image, oldLayout, newLayout, aspectMask);
+    EndSingleTimeCommandRecording(m_device, cmd, m_transientCmdPool, m_queues[0].queue);
+}
+
+void gfx::VulkanDevice::cmdBufferMemoryBarrier(VkCommandBuffer commandBuffer,
+                                                 VkBuffer buffer, 
+                                                 VkPipelineStageFlags2 srcStageMask, 
+                                                 VkPipelineStageFlags2 dstStageMask, 
+                                                 VkAccessFlags2 srcAccessMask, 
+                                                 VkAccessFlags2 dstAccessMask, 
+                                                 VkDeviceSize offset, 
+                                                 VkDeviceSize size, 
+                                                 uint32_t srcQueueFamilyIndex, 
+                                                 uint32_t dstQueueFamilyIndex)
+{
+    // Infer access masks if not explicitly provided
+    if (srcAccessMask == 0)
+    {
+        srcAccessMask = inferAccessMaskFromStage(srcStageMask, true);
+    }
+    if (dstAccessMask == 0)
+    {
+        dstAccessMask = inferAccessMaskFromStage(dstStageMask, false);
+    }
+
+    const std::array<VkBufferMemoryBarrier2, 1> bufferBarrier{ {{.sType = VK_STRUCTURE_TYPE_BUFFER_MEMORY_BARRIER_2,
+                                                                .srcStageMask = srcStageMask,
+                                                                .srcAccessMask = srcAccessMask,
+                                                                .dstStageMask = dstStageMask,
+                                                                .dstAccessMask = dstAccessMask,
+                                                                .srcQueueFamilyIndex = srcQueueFamilyIndex,
+                                                                .dstQueueFamilyIndex = dstQueueFamilyIndex,
+                                                                .buffer = buffer,
+                                                                .offset = offset,
+                                                                .size = size}} };
+
+    const VkDependencyInfo depInfo{ .sType = VK_STRUCTURE_TYPE_DEPENDENCY_INFO,
+                                   .bufferMemoryBarrierCount = uint32_t(bufferBarrier.size()),
+                                   .pBufferMemoryBarriers = bufferBarrier.data() };
+    vkCmdPipelineBarrier2(commandBuffer, &depInfo);
+}
+
+void gfx::VulkanDevice::BufferMemoryBarrier(VkBuffer buffer, VkPipelineStageFlags2 srcStageMask, VkPipelineStageFlags2 dstStageMask, VkAccessFlags2 srcAccessMask, VkAccessFlags2 dstAccessMask, VkDeviceSize offset, VkDeviceSize size, uint32_t srcQueueFamilyIndex, uint32_t dstQueueFamilyIndex)
+{
+    VkCommandBuffer cmd = BeginSingleTimeCommandRecording(m_device, m_transientCmdPool);
+    cmdBufferMemoryBarrier(cmd,
+        buffer,
+        srcStageMask,
+        dstStageMask,
+        srcAccessMask,
+        dstAccessMask,
+        offset,
+        size,
+        srcQueueFamilyIndex,
+        dstQueueFamilyIndex);
+    EndSingleTimeCommandRecording(m_device, cmd, m_transientCmdPool, m_queues[0].queue);
 }

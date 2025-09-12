@@ -42,7 +42,7 @@ namespace gfx
          * @param drawCalls  Encoded draw command stream (from DrawStreamEncoder).
          */
         virtual void BeginRenderPass(
-            const RenderDescriptor&& cmd,
+            const RenderDescriptor&& desc,
             utils::Span<uint32_t> drawCalls
         ) = 0;
 
