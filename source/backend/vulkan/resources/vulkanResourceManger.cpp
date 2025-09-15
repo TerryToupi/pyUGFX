@@ -3,10 +3,12 @@
 
 void gfx::VulkanResourceManager::Init()
 {
+	gfx::GPUAllocator::init();
 }
 
 void gfx::VulkanResourceManager::ShutDown()
 {
+	gfx::GPUAllocator::deinit();
 }
 
 utils::Handle<gfx::Shader> gfx::VulkanResourceManager::CreateShader(const gfx::ShaderDescriptor&& desc)

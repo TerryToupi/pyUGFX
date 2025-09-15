@@ -457,6 +457,15 @@ void gfx::VulkanDevice::CreateTransientCommandPool()
     DBG_VK_NAME(m_transientCmdPool);
 }
 
+VkCommandBuffer gfx::VulkanDevice::beginTransientRecording()
+{
+    return BeginSingleTimeCommandRecording(m_device, m_transientCmdPool);
+}
+
+void gfx::VulkanDevice::endTransientRecording(VkCommandBuffer cmd)
+{
+    EndSingleTimeCommandRecording(m_device, cmd, m_transientCmdPool, m_queues[0].queue);
+}
 
 void gfx::VulkanDevice::cmdTransitionImageLayout(VkCommandBuffer cmd, VkImage image, VkImageLayout oldLayout, VkImageLayout newLayout, VkImageAspectFlags aspectMask)
 {
@@ -515,14 +524,14 @@ void gfx::VulkanDevice::BufferMemoryBarrier(VkBuffer buffer, VkPipelineStageFlag
 {
     VkCommandBuffer cmd = BeginSingleTimeCommandRecording(m_device, m_transientCmdPool);
     cmdBufferMemoryBarrier(cmd,
-        buffer,
-        srcStageMask,
-        dstStageMask,
-        srcAccessMask,
-        dstAccessMask,
-        offset,
-        size,
-        srcQueueFamilyIndex,
-        dstQueueFamilyIndex);
+							buffer,
+							srcStageMask,
+							dstStageMask,
+							srcAccessMask,
+							dstAccessMask,
+							offset,
+							size,
+							srcQueueFamilyIndex,
+							dstQueueFamilyIndex);
     EndSingleTimeCommandRecording(m_device, cmd, m_transientCmdPool, m_queues[0].queue);
 }

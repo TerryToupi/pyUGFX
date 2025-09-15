@@ -17,6 +17,7 @@ void run()
             .clearColor = {1.0, 1.0, 1.0, 1.0}
         }
     }, utils::Span<uint32_t>(buf));
+
     return;
 }
 

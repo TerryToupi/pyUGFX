@@ -22,15 +22,15 @@ static void VulkanInit()
     ASSERT(glfwInit() == GLFW_TRUE, "Could not initilize GLFW!");
     ASSERT(glfwVulkanSupported() == GLFW_TRUE, "GLFW: Vulkan not supported!");
 
-    gfx::Device::instance = gfx::CreateShared<gfx::VulkanDevice>();
-    gfx::Window::instance = gfx::CreateShared<gfx::VulkanWindow>();
-    gfx::ResourceManager::instance = gfx::CreateShared<gfx::VulkanResourceManager>();
-    gfx::Renderer::instance = gfx::CreateShared<gfx::VulkanRenderer>();
+    gfx::Device::instance			= gfx::CreateShared<gfx::VulkanDevice>();
+    gfx::Window::instance			= gfx::CreateShared<gfx::VulkanWindow>();
+    gfx::ResourceManager::instance	= gfx::CreateShared<gfx::VulkanResourceManager>();
+    gfx::Renderer::instance			= gfx::CreateShared<gfx::VulkanRenderer>();
     
-    gfx::VulkanDevice* deviceManager = static_cast<gfx::VulkanDevice*>(gfx::Device::instance.get());
-    gfx::VulkanWindow* windowManager = static_cast<gfx::VulkanWindow*>(gfx::Window::instance.get());
+    gfx::VulkanDevice* deviceManager			= static_cast<gfx::VulkanDevice*>(gfx::Device::instance.get());
+    gfx::VulkanWindow* windowManager			= static_cast<gfx::VulkanWindow*>(gfx::Window::instance.get());
     gfx::VulkanResourceManager* resourceManager = static_cast<gfx::VulkanResourceManager*>(gfx::ResourceManager::instance.get());
-    gfx::VulkanRenderer* renderer = static_cast<gfx::VulkanRenderer*>(gfx::Renderer::instance.get());
+    gfx::VulkanRenderer* renderer				= static_cast<gfx::VulkanRenderer*>(gfx::Renderer::instance.get());
 
     deviceManager->Init();
     windowManager->Init({

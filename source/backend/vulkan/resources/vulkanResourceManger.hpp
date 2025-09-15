@@ -3,9 +3,8 @@
 #define __VULKAN_RESOURCE_MANAGER_HPP__
 
 #include <pool.hpp>
-
+#include <vulkanGPUAllocator.hpp>
 #include <resources/resourceManger.hpp>
-
 #include <resources/vulkanBindGroup.hpp>
 #include <resources/vulkanBindGroupLayout.hpp>
 #include <resources/vulkanBuffer.hpp>

@@ -5,6 +5,7 @@
 
 #define VK_ENABLE_BETA_EXTENSIONS
 #include <volk.h>
+#include <vma.hpp>
 
 #include <string>
 #include <log.hpp>

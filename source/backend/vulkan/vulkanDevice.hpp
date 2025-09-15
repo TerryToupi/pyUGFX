@@ -46,6 +46,9 @@ namespace gfx
 		VkPhysicalDeviceExtendedDynamicState3FeaturesEXT getDynamicState3Features() const { return m_dynamicState3Features; }
 		VkPhysicalDeviceSwapchainMaintenance1FeaturesEXT getSwapchainFeatures() const { return m_swapchainFeatures; }
 
+		VkCommandBuffer beginTransientRecording();
+		void			endTransientRecording(VkCommandBuffer cmd);
+
 		void cmdTransitionImageLayout(VkCommandBuffer    cmd,
 										VkImage            image,
 										VkImageLayout      oldLayout,
